@@ -184,7 +184,7 @@ h2 {
     width: 400px;
     background-color: rgba(103, 103, 103, 0.803);
     position: absolute;
-    right: -45px;
+    right: 0px;
     z-index: 55;
     visibility: hidden;
 }
