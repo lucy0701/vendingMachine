@@ -20,6 +20,7 @@ button {cursor: pointer;}
     border:12px solid rgb(251, 197, 73);
     border-style:dotted;
     box-sizing: border-box;
+    border-radius: 7px;
 }
 h2 {
     font-size: 40px;
@@ -84,6 +85,19 @@ h2 {
     width: 100%;
     height: 70%;
     margin-bottom: 10px;
+}
+.soldOut {
+    width: 70px;
+    height: 20px;
+    background-color: #ff0000b6;
+    color: #fff;
+    font-weight: bold;
+    transform: rotate(25deg);
+    position: absolute;
+    text-align: center;
+    top: 45px;
+    left: 35px;
+    opacity:0;
 }
 .price{
     width: 50px;
@@ -176,7 +190,18 @@ h2 {
     border: 3px solid black;
     box-sizing: border-box;
     background-color: rgb(255, 228, 196);
+    display: flex;
 }
+.inCoin {
+    width: 15px;
+    height: 80%;
+    background-color: rgb(58, 58, 58);
+    border-radius: 5px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    margin: auto;
+}
+
 .coinEnt:hover {
     background-color: rgb(255, 214, 161);
 }
@@ -188,19 +213,12 @@ h2 {
     z-index: 55;
     visibility: hidden;
 }
-.inCoin {
-    width: 15px;
-    height: 80%;
-    background-color: rgb(58, 58, 58);
-    border-radius: 5px;
-    border: 3px solid black;
-    box-sizing: border-box;
-    margin: auto;
-}
+
 .coinExit {
     width: 70px;
     height: 70px;
     border-radius: 50%;
+    font-size: 25px;
     border: 3px solid black;
     box-sizing: border-box;
     background-color: rgb(203, 186, 186);
@@ -231,7 +249,11 @@ h2 {
     border: 3px solid black;
     box-sizing: border-box;
     font-size: 35px;
+    color: #000;
+    text-align: center;
+    line-height: 80px;
 }
+
 .footerBox:hover {
     background-color: #f8e1d6;
 }
@@ -241,6 +263,7 @@ h2 {
     background-color: rgb(222, 255, 244);
     visibility: hidden;
 }
+
 .coinOpen{
     padding: 15px;
     border-radius: 20px;

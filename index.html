@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/style.css"/>
-    <script src="/main.js" defer></script>
+    <script type="module" src="/main.js" defer></script>
     <script src="https://kit.fontawesome.com/2c78292d9a.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -18,7 +18,7 @@
       <div id="main">
         <div id="itemList"></div>
 
-        <div class="coinPop coinOpen">
+        <div id="coinPop" class="coinPop coinOpen">
           <button class="coin coinBtn" value="100">100</button>
           <button class="coin coinBtn" value="50">50</button>
           <button class="coin coinBtn" value="10">10</button>
@@ -30,6 +30,7 @@
           <div class="bodyTop">
             <div class="itemBox">
               <div class="itemImg img01">
+                <p class="soldOut">sold out</p>
                 <div class="price">500</div>
                 <img src="/img/img16.png" alt="죽순500">
               </div>
@@ -37,6 +38,7 @@
             </div>
             <div class="itemBox">
               <div class="itemImg img02">
+                <p class="soldOut">sold out</p>
                 <div class="price">1000</div>
                 <img src="/img/img15.png" alt="승목1000">
               </div>
@@ -44,6 +46,7 @@
             </div>
             <div class="itemBox">
               <div class="itemImg img03">
+                <p class="soldOut">sold out</p>
                 <div class="price">18</div>
                 <img src="/img/img14.png" alt="번18">
               </div>
@@ -51,6 +54,7 @@
             </div>
             <div class="itemBox">
               <div class="itemImg img04">
+                <p class="soldOut">sold out</p>
                 <div class="price">10</div>
                 <img src="/img/img13.png" alt="익사10">
               </div>
@@ -58,6 +62,7 @@
             </div>
             <div class="itemBox">
               <div class="itemImg img05">
+                <p class="soldOut">sold out</p>
                 <div class="price">155</div>
                 <img src="/img/img11.png" alt="여주155">
               </div>
@@ -65,6 +70,7 @@
             </div>
             <div class="itemBox">
               <div class="itemImg img06">
+                <p class="soldOut">sold out</p>
                 <div class="price">95</div>
                 <img src="/img/img10.png" alt="재희95">
               </div>
@@ -72,6 +78,7 @@
             </div>
             <div class="itemBox">
               <div class="itemImg img08">
+                <p class="soldOut">sold out</p>
                 <div class="price">700</div>
                 <img src="/img/img09.png" alt="루미700">
               </div>
@@ -79,47 +86,50 @@
             </div>
             <div class="itemBox">
               <div class="itemImg img08">
+                <p class="soldOut">sold out</p>
                 <div class="price">888</div>
                 <img src="/img/img12.png" alt="코순888">
               </div>
               <button class="itemBtn btn08">구매</button>
             </div>
           </div>
+          
           <div class="bodyBottom">
             <div class="getItem">
               <div class="totalCoin">
-                <span class = "total">0</span>
+                <span class = "total"></span>
               </div>
               <div class="fromItem"></div>
             </div>
 
             <div class="coinBox">
-              <button class="coinEnt">
+              <a href="#coinPop" class="coinEnt popBtn">
                 <div class="inCoin"></div>
-              </button>
-              <button class="coinExit">반환</button>
+              </a>
+              <button class="coinExit"><i class="fa-solid fa-rotate-right"></i></button>
             </div>
           </div>
         </div>
       </div>
 
       <footer id="footer">        
-        <button class="inventory footerBox"><i class="fa-solid fa-heart"></i></button>
-        <div class="walletOpen coinOpen">
-          <div class="coin100 coin">100</div>
+        <a href="#itemList" class="inventory footerBox popBtn"><i class="fa-solid fa-heart"></i></a>
+        <div id="walletOpen" class="walletOpen coinOpen">
+          <div class="coin">100</div>
           <div class="balance" value="5">5</div>
-          <div class="coin50 coin">50</div>
+          <div class="coin">50</div>
           <div class="balance" value="5">5</div>
-          <div class="coin10 coin">10</div>
+          <div class="coin">10</div>
           <div class="balance" value="5">5</div>
-          <div class="coin5 coin">5</div>
+          <div class="coin">5</div>
           <div class="balance" value="5">5</div>
-          <div class="coin1 coin">1</div>
-          <div class="balance" value="5">5</div>
+          <div class="coin">1</div>
+          <div class="balance" value="5">0</div>
         </div>
-        <button class="wallet footerBox"><i class="fa-regular fa-credit-card"></i></button>
+        <a href="#walletOpen" class="wallet footerBox popBtn">
+          <i class="fa-regular fa-credit-card"></i>
+        </a>
       </footer>
-
     </div>
 </body>
 </html>
