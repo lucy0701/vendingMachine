@@ -3,20 +3,28 @@ export class Model {
         // 자판기 내부
         this.totalAmount = 0;
         this.insideCoins = [];
-        this.itemStock = [];
         this.priceList = [];
+        this.itemStock = [];
         // 외부
-        this.coins = [];
-        this.pocketCoins = [];
+        // this.coinCount = [];
+        this.coinsNames = [];
     }
-    
+
     getTotalAmount() {
         return this.totalAmount;
     }
-
-    getCoins() {
-        coins = [500, 100, 50, 10, 1];
-        return this.coins;
+    getOutCoins() {
+        this.coinsNames = [[100,10], [50,9], [10,8], [5,7], [1,6]];
+        return this.coinsNames;
+    }
+    getInCoins() {
+        this.insideCoins = [[100,11], [50,11], [10,11], [5,11], [1,11]];
+        return this.insideCoins;
+    }
+    getItemStock() {
+        this.itemStock = [[500,10], [1000,9], [18,8], [10,7], [155,6], [95,5], [700,4], [888,3]];
+        return this.itemStock;
     }
 
 }
+

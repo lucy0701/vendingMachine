@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>개힘드네</title>
     <link rel="stylesheet" href="/style.css"/>
     <script type="module" src="/main.js" defer></script>
     <script src="https://kit.fontawesome.com/2c78292d9a.js" crossorigin="anonymous"></script>
@@ -15,121 +15,156 @@
       <h2 id="title">하이의 자판기</h2>
     </header>
 
-      <div id="main">
-        <div id="itemList"></div>
+    <div id="main">
+      <!-- 인벤토리 팝업 -->
+      <div id="inventory"></div>
+      <!-- 코인 버튼 팝업 -->
+      <div id="coinPopUp" class="coinsBox">
+        <button class="coin coinBtn" value="100"></button>
+        <button class="coin coinBtn" value="50"></button>
+        <button class="coin coinBtn" value="10"></button>
+        <button class="coin coinBtn" value="5"></button>
+        <button class="coin coinBtn" value="1"></button>
+      </div>
+      
+      <!-- 자판기 본체 -->
+      <div class="vendingBody">
+        <!-- 본체 상단 -->
+        <div class="topBody">
 
-        <div id="coinPop" class="coinPop coinOpen">
-          <button class="coin coinBtn" value="100">100</button>
-          <button class="coin coinBtn" value="50">50</button>
-          <button class="coin coinBtn" value="10">10</button>
-          <button class="coin coinBtn" value="5">5</button>
-          <button class="coin coinBtn" value="1">1</button>
-        </div>
-        
-        <div class="vendingBody">
-          <div class="bodyTop">
-            <div class="itemBox">
-              <div class="itemImg img01">
-                <p class="soldOut">sold out</p>
-                <div class="price">500</div>
-                <img src="/img/img16.png" alt="죽순500">
-              </div>
-              <button class="itemBtn btn01">구매</button>   
+          <div class="itemBox">
+            <div class="itemImg">
+              <p class="soldOut">sold out</p>
+              <div class="price"></div>
+              <div class="itemStock"></div>
+              <img src="/img/img16.png" alt="죽순500">
             </div>
-            <div class="itemBox">
-              <div class="itemImg img02">
-                <p class="soldOut">sold out</p>
-                <div class="price">1000</div>
-                <img src="/img/img15.png" alt="승목1000">
-              </div>
-              <button class="itemBtn btn02">구매</button>
-            </div>
-            <div class="itemBox">
-              <div class="itemImg img03">
-                <p class="soldOut">sold out</p>
-                <div class="price">18</div>
-                <img src="/img/img14.png" alt="번18">
-              </div>
-              <button class="itemBtn btn03">구매</button>
-            </div>
-            <div class="itemBox">
-              <div class="itemImg img04">
-                <p class="soldOut">sold out</p>
-                <div class="price">10</div>
-                <img src="/img/img13.png" alt="익사10">
-              </div>
-              <button class="itemBtn btn04">구매</button>
-            </div>
-            <div class="itemBox">
-              <div class="itemImg img05">
-                <p class="soldOut">sold out</p>
-                <div class="price">155</div>
-                <img src="/img/img11.png" alt="여주155">
-              </div>
-              <button class="itemBtn btn05">구매</button>
-            </div>
-            <div class="itemBox">
-              <div class="itemImg img06">
-                <p class="soldOut">sold out</p>
-                <div class="price">95</div>
-                <img src="/img/img10.png" alt="재희95">
-              </div>
-              <button class="itemBtn btn06">구매</button>
-            </div>
-            <div class="itemBox">
-              <div class="itemImg img08">
-                <p class="soldOut">sold out</p>
-                <div class="price">700</div>
-                <img src="/img/img09.png" alt="루미700">
-              </div>
-              <button class="itemBtn btn07">구매</button>
-            </div>
-            <div class="itemBox">
-              <div class="itemImg img08">
-                <p class="soldOut">sold out</p>
-                <div class="price">888</div>
-                <img src="/img/img12.png" alt="코순888">
-              </div>
-              <button class="itemBtn btn08">구매</button>
-            </div>
+            <button class="buyBtn">구매</button>   
           </div>
-          
-          <div class="bodyBottom">
-            <div class="getItem">
-              <div class="totalCoin">
-                <span class = "total"></span>
-              </div>
-              <div class="fromItem"></div>
-            </div>
 
-            <div class="coinBox">
-              <a href="#coinPop" class="coinEnt popBtn">
-                <div class="inCoin"></div>
-              </a>
-              <button class="coinExit"><i class="fa-solid fa-rotate-right"></i></button>
+          <div class="itemBox">
+            <div class="itemImg">
+              <p class="soldOut">sold out</p>
+              <div class="price"></div>
+              <div class="itemStock"></div>
+              <img src="/img/img15.png" alt="승목1000">
             </div>
+            <button class="buyBtn">구매</button>
+          </div>
+
+          <div class="itemBox">
+            <div class="itemImg">
+              <p class="soldOut">sold out</p>
+              <div class="price"></div>
+              <div class="itemStock"></div>
+              <img src="/img/img14.png" alt="번18">
+            </div>
+            <button class="buyBtn">구매</button>
+          </div>
+
+          <div class="itemBox">
+            <div class="itemImg">
+              <p class="soldOut">sold out</p>
+              <div class="price"></div>
+              <div class="itemStock"></div>
+              <img src="/img/img13.png" alt="익사10">
+            </div>
+            <button class="buyBtn">구매</button>
+          </div>
+
+          <div class="itemBox">
+            <div class="itemImg">
+              <p class="soldOut">sold out</p>
+              <div class="price"></div>
+              <div class="itemStock"></div>
+              <img src="/img/img11.png" alt="여주155">
+            </div>
+            <button class="buyBtn">구매</button>
+          </div>
+
+          <div class="itemBox">
+            <div class="itemImg">
+              <p class="soldOut">sold out</p>
+              <div class="price"></div>
+              <div class="itemStock"></div>
+              <img src="/img/img10.png" alt="재희95">
+            </div>
+            <button class="buyBtn">구매</button>
+          </div>
+
+          <div class="itemBox">
+            <div class="itemImg">
+              <p class="soldOut">sold out</p>
+              <div class="price"></div>
+              <div class="itemStock"></div>
+              <img src="/img/img09.png" alt="루미700">
+            </div>
+            <button class="buyBtn">구매</button>
+          </div>
+
+          <div class="itemBox">
+            <div class="itemImg">
+              <p class="soldOut">sold out</p>
+              <div class="price"></div>
+              <div class="itemStock"></div>
+              <img src="/img/img12.png" alt="코순888">
+            </div>
+            <button class="buyBtn">구매</button>
+          </div>
+
+        </div>
+
+        <!-- 본체 하단 -->
+        <div class="bottomBody">
+
+          <!-- 하단 왼쪽 -->
+          <div class="bottomBodyLeft">
+            <div class="systemCoin"></div>
+            <div class="totalScreen">
+              <span class = "totalNum"></span>
+            </div>
+            <div class="getItem"></div>
+          </div>
+
+          <!-- 하단 오른쪽 -->
+          <div class="bottomBodyRight">
+            <!-- 코인 투입구 (팝업버튼) -->
+            <a href="#coinPopUp" class="coinEnt popUpBtn">
+              <div class="coinHole"></div>
+            </a>
+            <!-- 코인 반환 버튼 -->
+            <button class="returnCoin">
+              <i class="fa-solid fa-rotate-right"></i>
+            </button>
           </div>
         </div>
       </div>
-
-      <footer id="footer">        
-        <a href="#itemList" class="inventory footerBox popBtn"><i class="fa-solid fa-heart"></i></a>
-        <div id="walletOpen" class="walletOpen coinOpen">
-          <div class="coin">100</div>
-          <div class="balance" value="5">5</div>
-          <div class="coin">50</div>
-          <div class="balance" value="5">5</div>
-          <div class="coin">10</div>
-          <div class="balance" value="5">5</div>
-          <div class="coin">5</div>
-          <div class="balance" value="5">5</div>
-          <div class="coin">1</div>
-          <div class="balance" value="5">0</div>
-        </div>
-        <a href="#walletOpen" class="wallet footerBox popBtn">
-          <i class="fa-regular fa-credit-card"></i>
-        </a>
-      </footer>
     </div>
+
+    <footer id="footer">
+      <!-- 인벤토리 팝업 버튼 -->
+      <a href="#inventory" class="footerBtn popUpBtn">
+        <i class="fa-solid fa-heart"></i>
+      </a>
+      <!-- 유저 코인 팝업-->
+      <div id="wallet" class="coinsBox">
+        <div class="coin userCoin" value="100"></div>
+        <p class="userCoinCount"></p>
+        <div class="coin userCoin" value="50"></div>
+        <p class="userCoinCount"></p>
+        <div class="coin userCoin" value="10"></div>
+        <p class="userCoinCount"></p>
+        <div class="coin userCoin" value="5"></div>
+        <p class="userCoinCount"></p>
+        <div class="coin userCoin" value="1"></div>
+        <p class="userCoinCount"></p>
+      </div>
+      <!-- 유저 코인 팝업 버튼 -->
+      <a href="#wallet" class="footerBtn popUpBtn">
+        <i class="fa-regular fa-credit-card"></i>
+      </a>
+    </footer>
+
+  </div>
 </body>
 </html>
