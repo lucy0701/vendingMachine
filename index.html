@@ -18,14 +18,8 @@
     <div id="main">
       <!-- 인벤토리 팝업 -->
       <div id="inventory"></div>
-      <!-- 코인 버튼 팝업 -->
-      <div id="coinPopUp" class="coinsBox">
-        <button class="coin coinBtn" value="100"></button>
-        <button class="coin coinBtn" value="50"></button>
-        <button class="coin coinBtn" value="10"></button>
-        <button class="coin coinBtn" value="5"></button>
-        <button class="coin coinBtn" value="1"></button>
-      </div>
+
+      <button href="#" id="managerBtn" class="popUpBtn"></button>
       
       <!-- 자판기 본체 -->
       <div class="vendingBody">
@@ -129,7 +123,7 @@
           <!-- 하단 오른쪽 -->
           <div class="bottomBodyRight">
             <!-- 코인 투입구 (팝업버튼) -->
-            <a href="#coinPopUp" class="coinEnt popUpBtn">
+            <a class="coinEnt">
               <div class="coinHole"></div>
             </a>
             <!-- 코인 반환 버튼 -->
@@ -139,6 +133,7 @@
           </div>
         </div>
       </div>
+
     </div>
 
     <footer id="footer">
@@ -148,15 +143,15 @@
       </a>
       <!-- 유저 코인 팝업-->
       <div id="wallet" class="coinsBox">
-        <div class="coin userCoin" value="100"></div>
+        <button class="userCoin coinBtn" value="100">100</button>
         <p class="userCoinCount"></p>
-        <div class="coin userCoin" value="50"></div>
+        <button class="userCoin coinBtn" value="50">50</button>
+        <p class="userCoinCount "></p>
+        <button class="userCoin coinBtn" value="10">10</button>
         <p class="userCoinCount"></p>
-        <div class="coin userCoin" value="10"></div>
+        <button class="userCoin coinBtn" value="5">5</button>
         <p class="userCoinCount"></p>
-        <div class="coin userCoin" value="5"></div>
-        <p class="userCoinCount"></p>
-        <div class="coin userCoin" value="1"></div>
+        <button class="userCoin coinBtn" value="1">1</button>
         <p class="userCoinCount"></p>
       </div>
       <!-- 유저 코인 팝업 버튼 -->

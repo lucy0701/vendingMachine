@@ -1,30 +1,46 @@
 export class Model {
     constructor() {
-        // 자판기 내부
-        this.totalAmount = 0;
-        this.insideCoins = [];
-        this.priceList = [];
-        this.itemStock = [];
-        // 외부
-        // this.coinCount = [];
-        this.coinsNames = [];
-    }
+        this.totalAmount = JSON.parse(localStorage.getItem('totalAmount')) || 0;
 
-    getTotalAmount() {
-        return this.totalAmount;
-    }
-    getOutCoins() {
-        this.coinsNames = [[100,10], [50,9], [10,8], [5,7], [1,6]];
-        return this.coinsNames;
-    }
-    getInCoins() {
-        this.insideCoins = [[100,11], [50,11], [10,11], [5,11], [1,11]];
-        return this.insideCoins;
-    }
-    getItemStock() {
-        this.itemStock = [[500,10], [1000,9], [18,8], [10,7], [155,6], [95,5], [700,4], [888,3]];
-        return this.itemStock;
-    }
+        this.coinCount = JSON.parse(localStorage.getItem('coinCount'));
+        if (this.coinCount === null) {
+            this.coinCount = { coin100: 10, coin50: 10, coin10: 10, coin5: 10, coin1: 10 };
+            localStorage.setItem('coinCount', JSON.stringify(this.coinCount));
+        };
 
+        this.systemCoin = JSON.parse(localStorage.getItem('systemCoin'));
+        if (this.systemCoin === null) {
+            this.systemCoin = { coin100: 10, coin50: 10, coin10: 10, coin5: 10, coin1: 10 };
+            localStorage.setItem('systemCoin', JSON.stringify(this.systemCoin));
+        };
+        
+        this.items = JSON.parse(localStorage.getItem('items'));
+        if (this.items === null) {
+            this.items = [
+                { itemName: "루미700", price: 700, stock: 10, image: "/img/img09.png"},
+                { itemName: "재희95", price: 95, stock: 10, image: "/img/img10.png"},
+                { itemName: "여주155", price: 155, stock: 10, image: "/img/img11.png"},
+                { itemName: "코순888", price: 888, stock: 10, image: "/img/img12.png"},
+                { itemName: "익사10", price: 10, stock: 10, image: "/img/img13.png"},
+                { itemName: "번18", price: 18, stock: 10, image: "/img/img14.png"},
+                { itemName: "승목1000", price: 1000, stock: 10, image: "/img/img15.png"},
+                { itemName: "죽순500", price: 500, stock: 10, image: "/img/img16.png"}
+            ];
+            localStorage.setItem('items', JSON.stringify(this.items));
+        };
+    }
+    totalAmountUpdata() {
+        localStorage.setItem('totalAmount', JSON.stringify(this.totalAmount));
+    }
+    coinCountUpdata() {
+        localStorage.setItem('coinCount', JSON.stringify(this.coinCount));
+    }
+    systemCoinUpdata() {
+        localStorage.setItem('systemCoin', JSON.stringify(this.systemCoin));
+    }
+    itemsUpdata() {
+        localStorage.setItem('items', JSON.stringify(this.items));
+    }
 }
+
 

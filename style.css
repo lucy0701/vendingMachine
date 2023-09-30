@@ -63,6 +63,19 @@ h2 {
     background-color: rgb(255, 244, 224);
 }
 
+/* 관리자 */
+#managerBtn {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 15px;
+    bottom: 35px;
+    border-radius: 10px;
+    border: 4px solid #000000;
+    box-sizing: border-box;
+    background-color: #d4d4d4;
+}
+
 /* 자판기 상단 */
 .topBody {
     width: 100%;
@@ -216,14 +229,6 @@ h2 {
     box-sizing: border-box;
     background-color: rgb(58, 58, 58);
 }
-#coinPopUp{
-    width: 400px;
-    position: absolute;
-    right: 0px;
-    z-index: 55;
-    visibility: hidden;
-    background-color: rgba(103, 103, 103, 0.803);
-}
 .returnCoin {
     width: 70px;
     height: 70px;
@@ -294,7 +299,7 @@ h2 {
     border: 3px solid black;
     box-sizing: border-box;
 }
-.coin {
+.userCoin {
     width: 60px;
     height: 60px;
     font-size: 20px;
