@@ -1,13 +1,8 @@
-export class Controller {
-    constructor(model, view) {
-        this.view = view;
-        this.model = model;
-        this.controller = this;
-    }
-    
-    init(){
+export class Service {
+    constructor(){
 
     }
+
     // 동전 투입 (유저코인 -, 토탈화면 +)
     // 구매 활성 (구매 가능 상품)
     // 구매 처리 (토탈 - , 아이템 출력, 아이템 재고 -, 아이템 리스트에 추가 )
