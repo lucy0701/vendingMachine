@@ -1,7 +1,8 @@
-export class Controller {
-    constructor(model, view) {
+export default class Controller {
+    constructor(model, view, servic) {
         this.view = view;
         this.model = model;
+        this.servic = servic;
         this.controller = this;
     }
     
