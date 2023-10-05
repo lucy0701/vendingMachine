@@ -13,18 +13,23 @@ export default class Model {
                 { itemName: "승목1000", price: 1000, stock: 10, image: "/img/img15.png"},
                 { itemName: "죽순500", price: 500, stock: 10, image: "/img/img16.png"}
         ]);
-        this.getItemList = [];
+        this.getItemList = this.initData('getItemList',[]);
     }
-    initData(key, value) {
-        const data = JSON.parse(localStorage.getItem(key));
+
+    initData($key, $value) {
+        const data = JSON.parse(localStorage.getItem($key));
+
         if (data === null) {
-            this.updateData(key,value);
+            this.updateData($key,$value);
+            return $value;
         };
-        return value;
+        return data;
     }
-    updateData(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
+    updateData($key, $value) {
+        localStorage.setItem($key, JSON.stringify($value));
     }
+    
 }
+
 
 
