@@ -6,7 +6,7 @@ export default class View {
 
         // 코인
         this.coinBtns = document.querySelectorAll('.userCoin');
-        this.userCoinCount = document.querySelectorAll('.userCoinCount');
+        this.userCoin = document.querySelectorAll('.userCoinCount');
 
         // 자판기 외부
         this.totalNum = document.querySelector('.totalNum');
@@ -20,7 +20,7 @@ export default class View {
 
         // 자판기 내부
         this.itemStock = document.querySelectorAll('.itemStock');
-        this.machineCoinCount = document.querySelector('.machineCoin');
+        this.machineCoin = document.querySelector('.machineCoin');
 
         // 관리자
         this.itemNum = document.querySelector('#itemNum');
@@ -80,18 +80,18 @@ export default class View {
     //코인
     updateCoinInfo(){
 
-        // 유저 코인
-        this.updateUserCoinCount = ($userCoin) => {
-            for ( let i = 0; i < this.userCoinCount.length; i++ ){
-                this.userCoinCount[i].innerHTML = `${$userCoin[Object.keys($userCoin)[i]]}`;
+        // // 유저 코인
+        this.updateUserCoinCount = ($uCoin) => {
+            for ( let i = 0; i < this.userCoin.length; i++ ){
+                this.userCoin[i].innerHTML = `${$uCoin[Object.keys($uCoin)[i]]}`;
             }
         }
 
         // 자판기 내 코인
-        this.updateMachineCoinCount = ($machineCoin) => {
-            this.machineCoinCount.innerHTML = '';
-            for( let coinCount in $machineCoin ) {
-                this.machineCoinCount.innerHTML += `[ ${coinCount} : ${$machineCoin[coinCount]} ]`
+        this.updateMachineCoinCount = ($mCoin) => {
+            this.machineCoin.innerHTML = '';
+            for( let coinCount in $mCoin ) {
+                this.machineCoin.innerHTML += `[ ${coinCount} : ${$mCoin[coinCount]} ]`
             }
         }
     }

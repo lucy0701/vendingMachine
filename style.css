@@ -16,6 +16,7 @@ button {cursor: pointer;}
 #header {
     width: 100%;
     height: 10%;
+    position: relative;
     border-radius: 7px;
     border:12px solid rgb(251, 197, 73);
     border-style:dotted;
@@ -50,14 +51,14 @@ h2 {
 /* 자판기 본체 */
 #main {
     width: 100%;
-    height: 75%;
+    height: 80%;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .vendingBody{
-    width: 75%;
+    width: 90%;
     height: 90%;
     padding: 20px;
     border-radius: 20px;
@@ -66,17 +67,285 @@ h2 {
     background-color: rgb(255, 244, 224);
 }
 
+/* 자판기 상단 */
+.topBody {
+    width: 100%;
+    height: 55%;
+    border-radius: 10px;
+    border: 4px solid black;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.itemBox {
+    width: 25%;
+    height: 50%;
+    float: left;
+    padding: 5px;
+    position: relative;
+    box-sizing: border-box;
+    background-color: rgb(212, 196, 196);
+}
+.itemImg {
+    width: 100%;
+    height: 70%;
+    margin-bottom: 10px;
+}
+.itemImgPrint,
+.dropItem,
+.inventoryList{
+    width: 110px;
+    height: 110px;
+    display: block;
+    margin: auto;
+    border-radius: 50%;
+    border: 3px solid black;
+    box-sizing: border-box;
+}
+.soldOut {
+    width: 70px;
+    height: 20px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    top: 45px;
+    left: 35px;
+    opacity:0;
+    transform: rotate(25deg);
+    background-color: #ff0000b6;
+}
+.itemStock {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    box-sizing: border-box;
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    background-color: #fff;
+}
+.price{
+    width: 60px;
+    height: 25px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    bottom: 45px;
+    right: 5px;
+    border: 2px solid black;
+    box-sizing: border-box;
+    background-color: antiquewhite;
+}
+.buyBtn{
+    width: 85%;
+    height: 21%;
+    margin: auto;
+    line-height: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    border-radius: 10px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: rgb(253, 233, 209);
+}
+.buyBtn:hover {
+    background-color: rgb(210, 185, 154);
+}
+
+/* 자판기 하단 */
+.bottomBody {
+    width: 100%;
+    height: 45%;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+.bottomBodyLeft {
+    width: 70%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+/* 내부 코인 표시 */
+.machineCoin {
+    width: 400px;
+    height: 30px;
+    margin: auto;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+.totalScreen {
+    width: 70%;
+    height: 80px;
+    line-height: 80px;
+    margin: auto;
+    padding: 0 15px;
+    border-radius: 10px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: rgb(58, 58, 58);
+}
+.totalNum{
+    color: #ffb134;
+    font-size: 45px;
+    float: right;
+}
+.getItem {
+    width: 100%;
+    height: 30%;
+    margin-top: 5%;
+    border-radius: 10px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: rgb(236, 200, 200);
+}
+.dropItem {
+    opacity: 0;
+    background-color: #a87b7b;
+}
+.bottomBodyRight {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.coinEnt {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    border-radius: 50%;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: rgb(255, 228, 196);
+}
+.coinHole {
+    width: 15px;
+    height: 80%;
+    margin: auto;
+    border-radius: 5px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: rgb(58, 58, 58);
+}
+.returnCoin {
+    width: 70px;
+    height: 70px;
+    font-size: 25px;
+    border-radius: 50%;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: rgb(203, 186, 186);
+}
+.returnCoin:hover {
+    background-color: rgb(182, 164, 164);
+}
+
+
+/* 하단 */
+#footer {
+    width: 100%;
+    height: 10%;
+    padding: 0 20px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px;
+    border: 4px solid black;
+    box-sizing: border-box;
+    background-color: rgb(220, 242, 243);
+}
+
+.footerBtn{
+    width: 70px;
+    height: 70px;
+    font-size: 35px;
+    text-align: center;
+    line-height: 70px;
+    border-radius: 20px;
+    border: 3px solid black;
+    box-sizing: border-box;
+    color: #000;
+    background-color: #fff;
+
+}
+.footerBtn:hover {
+    background-color: #f8e1d6;
+}
+.footerTextBox {
+    width: 540px;
+    display: flex;
+    justify-content: space-between;
+}
+.footerText {
+    font-size: 25px;
+    text-align: center;
+}
+
+#wallet {
+    width: 570px;
+    height: 70px;
+    position: absolute;
+    left: 110px;
+    z-index: 30;
+    visibility: hidden;
+    background-color: rgba(222, 255, 244, 0.464);
+    backdrop-filter: blur(5px);
+}
+
+/* 코인 커스텀 */
+.coinsBox {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 20px;
+    border: 3px solid black;
+    box-sizing: border-box;
+}
+.userCoin {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 57px;
+    border-radius: 50%;
+    border: 3px solid black;
+    box-sizing: border-box;
+    background-color: rgb(255, 204, 110);
+}
+.coin:hover {
+    background-color: rgb(255, 221, 158);
+}
+
 /* 관리자 */
 #managerBtn {
     width: 50px;
     height: 50px;
+    font-size: 30px;
     position: absolute;
-    right: 15px;
-    bottom: 35px;
+    top: 10px;
+    right: 10px;
     border-radius: 10px;
     border: 3px solid #000000;
     box-sizing: border-box;
     background-color: #d4d4d4;
+    z-index: 50px;
 }
 #managerBtn:hover {
     background-color: #a5a5a5;
@@ -90,7 +359,7 @@ h2 {
     justify-content: space-evenly;
     position: absolute;
     right: 10px;
-    bottom: 100px;
+    top: 10px;
     z-index: 50;
     padding: 25px;
     border-radius: 10px;
@@ -126,249 +395,4 @@ h2 {
 }
 #saveItem:hover {
     background-color: #e7bfade7;
-}
-
-/* 자판기 상단 */
-.topBody {
-    width: 100%;
-    height: 55%;
-    border-radius: 10px;
-    border: 4px solid black;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-.itemBox {
-    width: 25%;
-    height: 50%;
-    float: left;
-    padding: 5px;
-    position: relative;
-    box-sizing: border-box;
-    background-color: rgb(212, 196, 196);
-}
-.itemImg {
-    width: 100%;
-    height: 70%;
-    margin-bottom: 10px;
-}
-.itemImgPrint,
-.dropItem,
-.inventoryList{
-    width: 100px;
-    height: 100px;
-    display: block;
-    margin: auto;
-    border-radius: 50%;
-    border: 3px solid black;
-    box-sizing: border-box;
-}
-.soldOut {
-    width: 70px;
-    height: 20px;
-    color: #fff;
-    font-weight: bold;
-    text-align: center;
-    position: absolute;
-    top: 45px;
-    left: 35px;
-    opacity:0;
-    transform: rotate(25deg);
-    background-color: #ff0000b6;
-}
-.itemStock {
-    width: 25px;
-    height: 25px;
-    text-align: center;
-    line-height: 25px;
-    border-radius: 50%;
-    border: 2px solid #000;
-    box-sizing: border-box;
-    position: absolute;
-    left: 15px;
-    top: 10px;
-    background-color: #fff;
-}
-
-.price{
-    width: 50px;
-    height: 20px;
-    text-align: center;
-    font-weight: bold;
-    position: absolute;
-    bottom: 45px;
-    right: 5px;
-    border: 2px solid black;
-    box-sizing: border-box;
-    background-color: antiquewhite;
-}
-.buyBtn{
-    width: 85%;
-    height: 21%;
-    margin: auto;
-    line-height: 100%;
-    font-size: 16px;
-    font-weight: bold;
-    display: block;
-    border-radius: 10px;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: rgb(253, 233, 209);
-}
-.buyBtn:hover {
-    background-color: rgb(210, 185, 154);
-}
-
-/* 자판기 하단 */
-.bottomBody {
-    width: 100%;
-    height: 40%;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-}
-.bottomBodyLeft {
-    width: 70%;
-    height: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-}
-.totalScreen {
-    width: 70%;
-    height: 35%;
-    margin: auto;
-    padding: 5px 10px;
-    border-radius: 10px;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: rgb(58, 58, 58);
-}
-.totalNum{
-    color: #ffb134;
-    font-size: 45px;
-    float: right;
-}
-.getItem {
-    width: 100%;
-    height: 45%;
-    margin-top: 5%;
-    border-radius: 10px;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: rgb(236, 200, 200);
-}
-.dropItem {
-    opacity: 0;
-    background-color: #a87b7b;
-}
-.bottomBodyRight {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-.coinEnt {
-    width: 100px;
-    height: 100px;
-    display: flex;
-    border-radius: 50%;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: rgb(255, 228, 196);
-}
-.coinHole {
-    width: 15px;
-    height: 80%;
-    margin: auto;
-    border-radius: 5px;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: rgb(58, 58, 58);
-}
-.returnCoin {
-    width: 70px;
-    height: 70px;
-    font-size: 25px;
-    border-radius: 50%;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: rgb(203, 186, 186);
-}
-.returnCoin:hover {
-    background-color: rgb(182, 164, 164);
-}
-
-/* 내부 코인 표시 */
-.machineCoin {
-    width: 350px;
-    height: 25px;
-    font-size: 15px;
-    line-height: 25px;
-    text-align: center;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: #ffffff;
-}
-
-/* 하단 */
-#footer {
-    width: 100%;
-    height: 15%;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 20px;
-    border: 4px solid black;
-    box-sizing: border-box;
-    background-color: rgb(220, 242, 243);
-}
-.footerBtn{
-    width: 80px;
-    height: 80px;
-    font-size: 35px;
-    text-align: center;
-    line-height: 80px;
-    border-radius: 20px;
-    border: 3px solid black;
-    box-sizing: border-box;
-    color: #000;
-    background-color: #fff;
-}
-.footerBtn:hover {
-    background-color: #f8e1d6;
-}
-#wallet {
-    width: 570px;
-    height: 80px;
-    visibility: hidden;
-    background-color: rgb(222, 255, 244);
-}
-
-/* 코인 커스텀 */
-.coinsBox {
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 20px;
-    border: 3px solid black;
-    box-sizing: border-box;
-}
-.userCoin {
-    width: 60px;
-    height: 60px;
-    font-size: 20px;
-    text-align: center;
-    line-height: 57px;
-    border-radius: 50%;
-    border: 3px solid black;
-    box-sizing: border-box;
-    background-color: rgb(255, 204, 110);
-}
-.coin:hover {
-    background-color: rgb(255, 221, 158);
 }

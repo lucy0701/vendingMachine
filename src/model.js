@@ -1,9 +1,10 @@
 export default class Model {
-    constructor() {
-        this.totalAmount = this.initData('totalAmount',0);
-        this.userCoinCount = this.initData('userCoinCount',{ coin1: 10, coin5: 10, coin10: 10, coin50: 10, coin100: 10 });
-        this.machineCoinCount = this.initData('machineCoinCount',{ '1': 10, '5': 10, '10': 10, '50': 10, '100': 10 });
-        this.items = this.initData('items',[
+    constructor(localStorageController) {
+        this.lo = localStorageController;
+        this.totalAmount = this.lo.initData('totalAmount',0);
+        this.userCoinCount = this.lo.initData('userCoinCount',{ coin1: 10, coin5: 10, coin10: 10, coin50: 10, coin100: 10 });
+        this.machineCoinCount = this.lo.initData('machineCoinCount',{ '1': 10, '5': 10, '10': 10, '50': 10, '100': 10 });
+        this.items = this.lo.initData('items',[
                 { itemName: "여주155", price: 155, stock: 10, image: "/img/img11.png"},
                 { itemName: "코순888", price: 888, stock: 10, image: "/img/img12.png"},
                 { itemName: "루미700", price: 700, stock: 10, image: "/img/img09.png"},
@@ -13,22 +14,9 @@ export default class Model {
                 { itemName: "승목1000", price: 1000, stock: 10, image: "/img/img15.png"},
                 { itemName: "죽순500", price: 500, stock: 10, image: "/img/img16.png"}
         ]);
-        this.getItemList = this.initData('getItemList',[]);
+        this.getItemList = this.lo.initData('getItemList',[]);
     }
 
-    initData($key, $value) {
-        const data = JSON.parse(localStorage.getItem($key));
-
-        if (data === null) {
-            this.updateData($key,$value);
-            return $value;
-        };
-        return data;
-    }
-    updateData($key, $value) {
-        localStorage.setItem($key, JSON.stringify($value));
-    }
-    
 }
 
 
