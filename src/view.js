@@ -53,28 +53,34 @@ export default class View {
                 this.itemImgPrint[i].setAttribute( 'alt', $items[i].itemName);
             }
         }
-
         // 매진 (on/off)
-        this.showSoldOut = ($soldOuts) => {
-            for ( let i = 0; i < this.soldOuts.length; i++ ){
-                if ( $soldOuts === 1 ) {
-                    this.buyBtns[i].style.backgroundColor= 'rgb(253, 233, 209)';
+        this.showSoldOut = ($items) => {
+            $items.forEach((item,i) =>{
+                if(item.stock === 0) {
                     this.soldOuts[i].style.opacity = '1';
-                } else if ( $soldOuts === 0 ) {
-                    this.buyBtns[i].style.backgroundColor = 'rgb(60, 244, 192)';
+                } else {
                     this.soldOuts[i].style.opacity = '0';
                 }
-            }
+            });
         }
-
-
-
+        // 상품 버튼
+        this.onBuyBtn = ($items,$total) => {
+            $items.forEach((item, i) => {
+                if($total >= item.price) {
+                    this.buyBtns[i].style.backgroundColor = 'rgb(60, 244, 192)';
+                } else if ($total < item.price) {
+                    this.buyBtns[i].style.backgroundColor= 'rgb(253, 233, 209)';
+                }
+            })
+        }
         // 재고
         this.itemStockCount = () => {
             for ( let i = 0; i < this.itemStock.length; i++ ){
                 this.itemStock[i].innerHTML = `${ $items[i].stock}`;
             }
         }
+
+        // 구매상품
     }
  
     //코인

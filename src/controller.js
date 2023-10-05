@@ -10,18 +10,13 @@ export default class Controller {
         this.items = this.m.items;
         this.getItemList = this.m.getItemList;
 
-        this.updateTotal = this.lo.updateData('totalAmount',this.totalAmount);
-        this.updateMCoin = this.lo.updateData('machineCoinCount',this.machineCoin);
-        this.updateUserCoin = this.lo.updateData('userCoinCount',this.userCoin);
-        this.updateItem = this.lo.updateData('items',this.items);
-
         this.init();
         this.addCoinToTotalAmount();
-
+        this.activatePurchase();
         this.handleBalanceRefund();
         this.activateManagerMode();
 
-        this.activatePurchase();
+        this.myItemList();
     }
     
     init(){
@@ -32,7 +27,6 @@ export default class Controller {
         this.v.updateItemInfo(this.items);
         this.v.displayItemPriceInfo();
         this.v.dispayItemImg();
-        this.v.showSoldOut();
         this.v.itemStockCount();
 
         // 코인
@@ -42,6 +36,15 @@ export default class Controller {
 
         // 관리자
         this.v.openManagerPage();
+
+        this.lo.updateData('totalAmount',this.totalAmount);
+        this.lo.updateData('machineCoinCount',this.machineCoin);
+        this.lo.updateData('userCoinCount',this.userCoin);
+        this.lo.updateData('items',this.items);
+        this.lo.updateData('getItemList',this.getItemList);
+
+        this.v.onBuyBtn(this.items,this.totalAmount);
+        this.v.showSoldOut(this.items);
     }
 
     // 동전 투입 (유저코인 -, 토탈화면 +)
@@ -60,23 +63,19 @@ export default class Controller {
                         this.totalAmount += coinValue;
                         this.machineCoin[machineCoinkey] = getMachineCoin + 1;
                         this.userCoin[UserCoinkey] = getUserCoin - 1;
+
                     } else if (this.totalAmount >= 10000) {
                         alert ('최대 금액을 넘었습니다!');
                     }
-
-                    this.updateTotal;
-                    this.updateMCoin;
-                    this.updateUserCoin;
                     this.init();
                 });
             }); 
-            
         } 
         this.insertCoin();
+
     }
 
-
-    // 구매 활성 (구매 가능 상품)
+    // 구매
     activatePurchase(){
 
         this.enableBuyButton = () => {
@@ -87,13 +86,11 @@ export default class Controller {
                         this.totalAmount -= this.items[i].price;
                         this.items[i].stock -= 1;
                         this.purchaseItem(i);
+                    } else if ( 0 === this.items[i].stock ) {
+                        alert ('다 팔렸어요. 다음에 이용해주세요.');
                     } else if (this.totalAmount < this.items[i].price) {
                         alert ('금액이 부족합니다');
-                    } else if ( 0 === this.items[i].stock ) {
-                        alert ('다 팔렸어요. 다음에 이용해주세요.')
                     }
-                    this.updateTotal;
-                    this.updateItem;
                     this.init();
                 });
             }
@@ -103,17 +100,25 @@ export default class Controller {
         this.purchaseItem = ($itemIndex) => {
             const inventoryList = document.createElement('img');
             this.v.dropItem.setAttribute('src', this.items[$itemIndex].image);
-            // 데이터에 추가
             this.getItemList.push(this.items[$itemIndex]);
-
             this.v.dropItem.addEventListener('click',() => {
                 this.v.dropItem.style.opacity = 0;
+                // 데이터에 추가
                 inventoryList.setAttribute('class','inventoryList');
                 inventoryList.setAttribute('src', this.items[$itemIndex].image);
                 this.v.inventory.appendChild(inventoryList);
             });
-            this.lo.updateData('getItemList',this.getItemList);
             this.init();
+        }
+
+        this.myItemList = () => {
+            
+            this.getItemList.forEach((item) => {
+                const inventoryList = document.createElement('img');
+                inventoryList.setAttribute('class','inventoryList');
+                inventoryList.setAttribute('src', item.image);
+                this.v.inventory.appendChild(inventoryList);
+            });
         }
     }
 
@@ -150,9 +155,6 @@ export default class Controller {
                     this.userCoin[userCoinKey[0]] = this.userCoin[userCoinKey[0]] + 1;
                     break;
             }
-            this.updateTotal;
-            this.updateMCoin;
-            this.updateUserCoin;
             this.init();
         }
         this.returnBalance = () => {
@@ -202,7 +204,6 @@ export default class Controller {
                 alert ('저장 완료');
             }
             this.v.openManagerPage();
-            this.updateItem;
             this.init();
 
         });

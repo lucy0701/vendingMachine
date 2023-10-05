@@ -41,7 +41,7 @@ h2 {
     padding-top: 10px;
     top: 60px;
     left: 0px;
-    z-index: 55;
+    z-index: 100;
     visibility: hidden;
     overflow: auto;
     backdrop-filter: blur(5px);
@@ -102,16 +102,18 @@ h2 {
     box-sizing: border-box;
 }
 .soldOut {
-    width: 70px;
-    height: 20px;
+    width:130px;
+    height: 30px;
     color: #fff;
+    font-size: 25px;
     font-weight: bold;
     text-align: center;
     position: absolute;
-    top: 45px;
-    left: 35px;
+    top: 48px;
+    left: 15px;
     opacity:0;
     transform: rotate(25deg);
+    z-index: 80;
     background-color: #ff0000b6;
 }
 .itemStock {

@@ -11,5 +11,4 @@ export default class LocalStorageController {
     updateData($key, $value) {
         localStorage.setItem($key, JSON.stringify($value));
     }
-    
 }
