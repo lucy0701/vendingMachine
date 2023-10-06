@@ -10,6 +10,8 @@ export default class Model extends LocalStorage {
         this.getMachineCoinCount();
         this.getItems();
         this.getmyItemList();
+
+        console.log(this.data.totalAmount);
     }
 
     getTotalAmount() {
@@ -25,7 +27,7 @@ export default class Model extends LocalStorage {
     }
     setUserCoinCount($values) {
         this.saveData('userCoinCount', $values);
-        return this.getTotalAmount();
+        return this.getUserCoinCount();
     }
 
     getMachineCoinCount() {
@@ -33,7 +35,7 @@ export default class Model extends LocalStorage {
     }
     setMachineCoinCount($values) {
         this.saveData('machineCoinCount', $values);
-        return this.getTotalAmount();
+        return this.getMachineCoinCount();
     }
 
     getItems() {
@@ -41,7 +43,7 @@ export default class Model extends LocalStorage {
     }
     setItems($values) {
         this.saveData('items', $values);
-        return this.getTotalAmount();
+        return this.getItems();
     }
 
     getmyItemList() {
@@ -49,7 +51,7 @@ export default class Model extends LocalStorage {
     }
     setmyItemList($values) {
         this.saveData('myItemList', $values);
-        return this.getTotalAmount();
+        return this.getmyItemList();
     }
 
 }

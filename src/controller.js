@@ -38,6 +38,14 @@ export default class Controller {
 
         this.v.onBuyBtn(this.items,this.total);
         this.v.showSoldOut(this.items);
+
+        // 저장
+        this.m.setTotalAmount(this.total);
+        this.m.setUserCoinCount(this.userCoin);
+        this.m.setMachineCoinCount(this.machineCoin);
+        this.m.setItems(this.items);
+        this.m.setmyItemList(this.getItemList);
+
     }
 
     // 동전 투입 (유저코인 -, 토탈화면 +)
@@ -61,6 +69,7 @@ export default class Controller {
                         alert ('최대 금액을 넘었습니다!');
                     }
                     this.init();
+                    
                 });
             }); 
         } 
