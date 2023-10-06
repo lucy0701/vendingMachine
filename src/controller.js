@@ -1,14 +1,13 @@
 export default class Controller {
-    constructor(localStorageController, model, view) {
-        this.lo = localStorageController;
+    constructor(model, view) {
         this.v = view;
         this.m = model;
 
-        this.totalAmount = this.m.totalAmount;
-        this.userCoin = this.m.userCoinCount;
-        this.machineCoin = this.m.machineCoinCount;
-        this.items = this.m.items;
-        this.getItemList = this.m.getItemList;
+        this.total = this.m.getTotalAmount();
+        this.userCoin = this.m.getUserCoinCount();
+        this.machineCoin = this.m.getMachineCoinCount();
+        this.items = this.m.getItems();
+        this.getItemList = this.m.getmyItemList();
 
         this.init();
         this.addCoinToTotalAmount();
@@ -21,7 +20,7 @@ export default class Controller {
     
     init(){
         // 토탈 화면
-        this.v.updateTotalScreen(this.totalAmount);
+        this.v.updateTotalScreen(this.total);
 
         // 아이템
         this.v.updateItemInfo(this.items);
@@ -37,13 +36,7 @@ export default class Controller {
         // 관리자
         this.v.openManagerPage();
 
-        this.lo.updateData('totalAmount',this.totalAmount);
-        this.lo.updateData('machineCoinCount',this.machineCoin);
-        this.lo.updateData('userCoinCount',this.userCoin);
-        this.lo.updateData('items',this.items);
-        this.lo.updateData('getItemList',this.getItemList);
-
-        this.v.onBuyBtn(this.items,this.totalAmount);
+        this.v.onBuyBtn(this.items,this.total);
         this.v.showSoldOut(this.items);
     }
 
@@ -59,12 +52,12 @@ export default class Controller {
                     const getMachineCoin = this.machineCoin[machineCoinkey];
                     const getUserCoin = this.userCoin[UserCoinkey];
 
-                    if ( getUserCoin > 0 && this.totalAmount < 10000){
-                        this.totalAmount += coinValue;
+                    if ( getUserCoin > 0 && this.total < 10000){
+                        this.total += coinValue;
                         this.machineCoin[machineCoinkey] = getMachineCoin + 1;
                         this.userCoin[UserCoinkey] = getUserCoin - 1;
 
-                    } else if (this.totalAmount >= 10000) {
+                    } else if (this.total >= 10000) {
                         alert ('최대 금액을 넘었습니다!');
                     }
                     this.init();
@@ -81,14 +74,14 @@ export default class Controller {
         this.enableBuyButton = () => {
             for(let i = 0; i < this.v.buyBtns.length; i++) {
                 this.v.buyBtns[i].addEventListener('click',() => {
-                    if ( this.totalAmount >= this.items[i].price && 0 < this.items[i].stock ) {
+                    if ( this.total >= this.items[i].price && 0 < this.items[i].stock ) {
                         this.v.dropItem.style.opacity = 1;
-                        this.totalAmount -= this.items[i].price;
+                        this.total -= this.items[i].price;
                         this.items[i].stock -= 1;
                         this.purchaseItem(i);
                     } else if ( 0 === this.items[i].stock ) {
                         alert ('다 팔렸어요. 다음에 이용해주세요.');
-                    } else if (this.totalAmount < this.items[i].price) {
+                    } else if (this.total < this.items[i].price) {
                         alert ('금액이 부족합니다');
                     }
                     this.init();
@@ -128,29 +121,29 @@ export default class Controller {
             const machineCoinKey = Object.keys(this.machineCoin);
             const userCoinKey = Object.keys(this.userCoin);
 
-            switch(this.totalAmount > 0) {
-                case (this.totalAmount >= 100) :
-                    this.totalAmount -= 100;
+            switch(this.total > 0) {
+                case (this.total >= 100) :
+                    this.total -= 100;
                     this.machineCoin[machineCoinKey[4]] = this.machineCoin[machineCoinKey[4]] - 1;
                     this.userCoin[userCoinKey[4]] = this.userCoin[userCoinKey[4]] + 1;
                     break;
-                case (this.totalAmount < 100 && this.totalAmount >= 50) :
-                    this.totalAmount -= 50;
+                case (this.total < 100 && this.total >= 50) :
+                    this.total -= 50;
                     this.machineCoin[machineCoinKey[3]] = this.machineCoin[machineCoinKey[3]] - 1;
                     this.userCoin[userCoinKey[3]] = this.userCoin[userCoinKey[3]] + 1;
                     break;
-                case (this.totalAmount < 50 && this.totalAmount >= 10) :
-                    this.totalAmount -= 10;
+                case (this.total < 50 && this.total >= 10) :
+                    this.total -= 10;
                     this.machineCoin[machineCoinKey[2]] = this.machineCoin[machineCoinKey[2]] - 1;
                     this.userCoin[userCoinKey[2]] = this.userCoin[userCoinKey[2]] + 1;
                     break;
-                case (this.totalAmount < 10 && this.totalAmount >= 5) :
-                    this.totalAmount -= 5;
+                case (this.total < 10 && this.total >= 5) :
+                    this.total -= 5;
                     this.machineCoin[machineCoinKey[1]] = this.machineCoin[machineCoinKey[1]] - 1;
                     this.userCoin[userCoinKey[1]] = this.userCoin[userCoinKey[1]] + 1;
                     break;
-                case (this.totalAmount < 5 && this.totalAmount >= 0) :
-                    this.totalAmount -= 1;
+                case (this.total < 5 && this.total >= 0) :
+                    this.total -= 1;
                     this.machineCoin[machineCoinKey[0]] = this.machineCoin[machineCoinKey[0]] - 1;
                     this.userCoin[userCoinKey[0]] = this.userCoin[userCoinKey[0]] + 1;
                     break;
@@ -160,9 +153,9 @@ export default class Controller {
         this.returnBalance = () => {
             this.v.returnCoin.addEventListener('click',() => {
                 while(true) {
-                    if ( this.totalAmount > 0) {
+                    if ( this.total > 0) {
                         returnCoins();
-                    } else if (this.totalAmount === 0) {
+                    } else if (this.total === 0) {
                         break;
                     }
                 }
