@@ -347,7 +347,7 @@ h2 {
     border: 3px solid #000000;
     box-sizing: border-box;
     background-color: #d4d4d4;
-    z-index: 50px;
+    z-index: 100px;
 }
 #managerBtn:hover {
     background-color: #a5a5a5;
@@ -362,7 +362,7 @@ h2 {
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 50;
+    z-index: 990;
     padding: 25px;
     border-radius: 10px;
     border: 5px solid #000;
@@ -397,4 +397,220 @@ h2 {
 }
 #saveItem:hover {
     background-color: #e7bfade7;
+}
+
+
+
+/* 반응형 모바일 */
+@media screen and (min-width: 360px) and (max-width: 768px) {
+    #warp {
+        width: 360px;
+        height: 450px;
+        margin-top: 30px;
+    }
+    
+    /* 타이틀 */
+    #header {
+        border:8px solid rgb(251, 197, 73);
+        border-style:dotted;
+    }
+    h2 {
+        font-size: 20px;
+        line-height: 160%;
+    }
+    
+    /* 구매 아이템 */
+    #inventory {
+        width: 90px;
+        height: 280px;
+        border: 3px solid black;
+    }
+    
+    /* 자판기 본체 */
+    .vendingBody{
+        padding: 12px;
+        border: 3px solid black;
+    }
+    
+    /* 자판기 상단 */
+    .topBody {
+        border: 3px solid black;
+    }
+    .itemBox {
+        padding: 2px;
+    }
+    .itemImg {
+        width: 100%;
+        height: 70%;
+        margin-bottom: 10px;
+    }
+    .itemImgPrint,
+    .dropItem,
+    .inventoryList{
+        width: 50px;
+        height: 50px;
+        border: 2px solid black;
+    }
+    .soldOut {
+        width:60px;
+        height: 20px;
+        color: #fff;
+        font-size: 15px;
+        top: 20px;
+        left: 5px;
+    }
+    .itemStock {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+        line-height: 20px;
+        border: 1.5px solid #000;
+        left: 1px;
+        top: 2px;
+    }
+    .price{
+        width: 30px;
+        height: 14px;
+        font-size: 8px;
+        bottom: 22px;
+        right: 2px;
+        border: 1.5px solid black;
+    }
+    .buyBtn{
+        width: 85%;
+        height: 23%;
+        position: absolute;
+        bottom: 3px;
+        left: 6px;
+        font-size: 10px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+    
+    /* 자판기 하단 */
+    .bottomBody {
+        margin-top: 7px;
+    }
+    .bottomBodyLeft {
+        width: 70%;
+        height: 100%;
+        padding: 1px;
+    }
+    /* 내부 코인 표시 */
+    .machineCoin {
+        width: 100%;
+        height: 20px;
+        font-size: 9px;
+        line-height: 20px;
+        margin-bottom: 7px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+    
+    .totalScreen {
+        width: 70%;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 10px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+    .totalNum{
+        font-size: 25px;
+    }
+    .coinEnt {
+        width: 60px;
+        height: 60px;
+        display: flex;
+    }
+    .coinHole {
+        width: 10px;
+    }
+    .returnCoin {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    /* 하단 */
+    #footer {
+        padding: 0 5px;
+        border-radius: 10px;
+        border: 2px solid black;
+    }
+    
+    .footerBtn{
+        width: 37px;
+        height: 37px;
+        font-size: 20px;
+        line-height: 37px;
+        border-radius: 50%;
+        border: 2px solid black;
+    }
+
+    .footerTextBox {
+        width: 230px;
+    }
+    .footerText {
+        font-size: 15px;
+    }
+    
+    #wallet {
+        width: 250px;
+        height: 50px;
+        position: absolute;
+        left: 53px;
+        z-index: 30;
+    }
+    
+    /* 코인 커스텀 */
+    .coinsBox {
+        padding: 2px;
+        font-size: 10px;
+        border-radius: 10px;
+        border: 2px solid black;
+    }
+    .userCoin {
+        width: 33px;
+        height: 33px;
+        font-size: 13px;
+        line-height: 25px;
+        border: 2px solid black;
+    }
+    
+    /* 관리자 */
+    #managerBtn {
+        width: 30px;
+        height: 30px;
+        font-size: 17px;
+        top: 0;
+        right: 5px;
+        border: 2px solid #000000;
+    }
+    #managerPage {
+        width: 250px;
+        height: 300px;
+        padding: 15px;
+        font-size: 12px;
+        right: 10px;
+        top: 10px;
+        border: 3px solid #000;
+    }
+    
+    #stockChange,
+    #priceChange,
+    #itemNum{
+        height: 25px;
+        margin-bottom: 5px;
+        font-size: 12px;
+        border-radius: 5px;
+        border: 2px solid #000;
+    }
+    
+    #saveItem {
+        height: 25px;
+        font-size: 12px;
+        border-radius: 5px;
+        border: 2px solid #000;
+    }
 }

@@ -48,7 +48,7 @@ export default class Controller {
 
     }
 
-    // 동전 투입 (유저코인 -, 토탈화면 +)
+    // 동전 투입
     addCoinToTotalAmount(){
         // 코인 넣기
         this.insertCoin = () => {
@@ -124,7 +124,7 @@ export default class Controller {
         }
     }
 
-    // 환불 처리 (토탈금액 계산, 토탈 초기화, 자판기 금액 - )
+    // 환불 처리
     handleBalanceRefund(){
         const returnCoins = () => {
             const machineCoinKey = Object.keys(this.machineCoin);
@@ -174,7 +174,7 @@ export default class Controller {
     }
 
 
-    // 관리자 (재고 채우기, 가격 조절)
+    // 관리자
     activateManagerMode(){
         const getItemSelectValue = () => {
             const selectValue = this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
