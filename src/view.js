@@ -26,6 +26,7 @@ export default class View {
         this.itemNum = document.querySelector('#itemNum');
         this.stockChange = document.querySelector('#stockChange');
         this.priceChange = document.querySelector('#priceChange');
+        this.imageChange = document.querySelector('#imageChange');
         this.managerPage = document.querySelector('#managerPage');
 
     }
@@ -58,6 +59,7 @@ export default class View {
             $items.forEach((item,i) =>{
                 if(item.stock === 0) {
                     this.soldOuts[i].style.opacity = '1';
+                    this.buyBtns[i].style.backgroundColor = 'rgb(253, 233, 209)';
                 } else {
                     this.soldOuts[i].style.opacity = '0';
                 }
@@ -80,13 +82,12 @@ export default class View {
             }
         }
 
-        // 구매상품
     }
  
     //코인
     updateCoinInfo(){
 
-        // // 유저 코인
+        // 유저 코인
         this.updateUserCoinCount = ($uCoin) => {
             for ( let i = 0; i < this.userCoin.length; i++ ){
                 this.userCoin[i].innerHTML = `${$uCoin[Object.keys($uCoin)[i]]}`;

@@ -5,13 +5,12 @@ export default class Model extends LocalStorage {
     constructor() {
         super();
         this.data = data;
-        this.getTotalAmount();
-        this.getUserCoinCount();
-        this.getMachineCoinCount();
-        this.getItems();
-        this.getmyItemList();
+        // this.getTotalAmount();
+        // this.getUserCoinCount();
+        // this.getMachineCoinCount();
+        // this.getItems();
+        // this.getmyItemList();
 
-        console.log(this.data.totalAmount);
     }
 
     getTotalAmount() {

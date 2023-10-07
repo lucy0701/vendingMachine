@@ -22,7 +22,7 @@
 
       <form name="managerPage" id="managerPage" method="POST" action="/src/view.js">
         <label for="itemNum">아이템</label>
-        <select name="itemNum" id="itemNum">
+        <select name="itemNum" class="managerInput" id="itemNum">
           <option disabled selected value="default">아이템 선택</option>
           <option name='itemNum' value="여주155">여주</option>
           <option name='itemNum' value="코순888">코순</option>
@@ -35,10 +35,10 @@
         </select>
 
         <label for="stockChange">재고</label>
-        <input type="number" name="stockChange" id="stockChange" class="stockinput" min="1" max="20">
+        <input type="number" name="stockChange" id="stockChange" class="managerInput" min="0" max="20">
 
         <label for="priceChange">가격</label>
-        <input type="number" name="priceChange" id="priceChange" class="stockinput" min="1"  max="2000">
+        <input type="number" name="priceChange" id="priceChange" class="managerInput" min="1"  max="2000">
 
         <input type="submit" id="saveItem" value="저장" />
       </form>

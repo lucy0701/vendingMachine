@@ -19,6 +19,13 @@ export default class Controller {
     }
     
     init(){
+        // 저장
+        this.m.setTotalAmount(this.total);
+        this.m.setUserCoinCount(this.userCoin);
+        this.m.setMachineCoinCount(this.machineCoin);
+        this.m.setItems(this.items);
+        this.m.setmyItemList(this.getItemList);
+
         // 토탈 화면
         this.v.updateTotalScreen(this.total);
 
@@ -38,13 +45,6 @@ export default class Controller {
 
         this.v.onBuyBtn(this.items,this.total);
         this.v.showSoldOut(this.items);
-
-        // 저장
-        this.m.setTotalAmount(this.total);
-        this.m.setUserCoinCount(this.userCoin);
-        this.m.setMachineCoinCount(this.machineCoin);
-        this.m.setItems(this.items);
-        this.m.setmyItemList(this.getItemList);
 
     }
 
@@ -69,7 +69,6 @@ export default class Controller {
                         alert ('최대 금액을 넘었습니다!');
                     }
                     this.init();
-                    
                 });
             }); 
         } 
@@ -100,15 +99,16 @@ export default class Controller {
         this.enableBuyButton();
 
         this.purchaseItem = ($itemIndex) => {
-            const inventoryList = document.createElement('img');
+            const myItem = document.createElement('img');
+            
             this.v.dropItem.setAttribute('src', this.items[$itemIndex].image);
-            this.getItemList.push(this.items[$itemIndex]);
+            this.getItemList.push(this.items[$itemIndex].image);
             this.v.dropItem.addEventListener('click',() => {
                 this.v.dropItem.style.opacity = 0;
-                // 데이터에 추가
-                inventoryList.setAttribute('class','inventoryList');
-                inventoryList.setAttribute('src', this.items[$itemIndex].image);
-                this.v.inventory.appendChild(inventoryList);
+
+                myItem.classList.add('myItem');
+                myItem.setAttribute('src', this.items[$itemIndex].image);
+                this.v.inventory.appendChild(myItem);
             });
             this.init();
         }
@@ -116,10 +116,13 @@ export default class Controller {
         this.myItemList = () => {
             
             this.getItemList.forEach((item) => {
-                const inventoryList = document.createElement('img');
-                inventoryList.setAttribute('class','inventoryList');
-                inventoryList.setAttribute('src', item.image);
-                this.v.inventory.appendChild(inventoryList);
+                const myItem = document.createElement('img');
+
+                myItem.classList.add('myItem');
+                myItem.setAttribute('src', item.image);
+
+                this.v.inventory.appendChild(myItem);
+
             });
         }
     }
@@ -205,6 +208,7 @@ export default class Controller {
                 this.v.itemStockCount(seletItem.stock);
                 alert ('저장 완료');
             }
+            
             this.v.openManagerPage();
             this.init();
 

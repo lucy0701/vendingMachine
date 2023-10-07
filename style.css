@@ -19,7 +19,7 @@ button {cursor: pointer;}
     position: relative;
     border-radius: 7px;
     border:12px solid rgb(251, 197, 73);
-    border-style:dotted;
+    border-style: dotted;
     box-sizing: border-box;
     background-color: rgb(58, 58, 58);
 }
@@ -34,6 +34,7 @@ h2 {
 #inventory {
     width: 150px;
     height: 600px;
+    text-align: center;
     border-radius: 20px;
     border: 4px solid black;
     box-sizing: border-box;
@@ -92,7 +93,7 @@ h2 {
 }
 .itemImgPrint,
 .dropItem,
-.inventoryList{
+.myItem{
     width: 110px;
     height: 110px;
     display: block;
@@ -353,8 +354,8 @@ h2 {
     background-color: #a5a5a5;
 }
 #managerPage {
-    width: 300px;
-    height: 350px;
+    width: 350px;
+    height: 500px;
     font-size: 18px;
     display: flex;
     flex-direction: column;
@@ -371,15 +372,12 @@ h2 {
     visibility: hidden;
     backdrop-filter: blur(5px);
 }
-.stockinput {
-    padding: 0 10px; 
-}
 
-#stockChange,
-#priceChange,
-#itemNum{
-    height: 30px;
+.managerInput{
+    height: 35px;
     margin-bottom: 20px;
+    line-height: 30px;
+    padding: 0 10px; 
     font-size: 18px;
     border-radius: 5px;
     border: 2px solid #000;
@@ -446,7 +444,7 @@ h2 {
     }
     .itemImgPrint,
     .dropItem,
-    .inventoryList{
+    .myItem{
         width: 50px;
         height: 50px;
         border: 2px solid black;
@@ -597,11 +595,10 @@ h2 {
         border: 3px solid #000;
     }
     
-    #stockChange,
-    #priceChange,
-    #itemNum{
+    .managerInput{
         height: 25px;
         margin-bottom: 5px;
+        line-height: 20px;
         font-size: 12px;
         border-radius: 5px;
         border: 2px solid #000;
