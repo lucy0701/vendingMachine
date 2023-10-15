@@ -1,14 +1,29 @@
-export default class LocalStorage {
+import DefaultData from './data.js';
 
-    readData($key, $value) {
-        const data = JSON.parse(localStorage.getItem($key));
-        if (data === null) {
-            this.saveData($key, $value);
-            return $value;
-        }
-        return data;
+export default class LocalStorage {
+    constructor() {
+        this.init();
     }
-    saveData($key, $value) {
-        localStorage.setItem($key, JSON.stringify($value));
+
+    init(){
+        this.checkData('totalAmount');
+        this.checkData('userCoinCount');
+        this.checkData('machineCoinCount');
+        this.checkData('items');
+        this.checkData('myItemList');
+    }
+
+    checkData(key){
+        if(this.readData(key) === null ){
+            this.saveData(key,DefaultData[key]);
+        }
+    }
+
+    readData(key) {
+        return JSON.parse(localStorage.getItem(key));
+    }
+    saveData(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+        return value;
     }
 }

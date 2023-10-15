@@ -1,7 +1,7 @@
 const data = {
     'totalAmount': 0,
 
-    'userCoinCount': { coin1: 10, coin5: 10, coin10: 10, coin50: 10, coin100: 10 },
+    'userCoinCount': { '1': 10, '5': 10, '10': 10, '50': 10, '100': 10 },
 
     'machineCoinCount': { '1': 10, '5': 10, '10': 10, '50': 10, '100': 10 },
 
