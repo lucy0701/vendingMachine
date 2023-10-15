@@ -216,7 +216,7 @@ h2 {
     background-color: rgb(236, 200, 200);
 }
 .dropItem {
-    opacity: 0;
+    display: none;
     background-color: #a87b7b;
 }
 .bottomBodyRight {

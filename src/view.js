@@ -82,6 +82,14 @@ export default class View {
             }
         }
 
+        // 드랍아이템
+        this.onDropItem = () => {
+            this.dropItem.style.display = 'block';
+        }
+        this.offDropItem = () => {
+            this.dropItem.style.display = 'none';
+        }
+
     }
  
     //코인
