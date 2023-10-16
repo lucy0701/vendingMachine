@@ -3,78 +3,89 @@ import LocalStorage from './localStorage.js';
 export default class Model extends LocalStorage {
     constructor() {
         super();
-        this.totalAmount = this.getTotalAmount();
-        this.userCoins = this.getUserCoinCount();
-        this.machineCoins = this.getMachineCoinCount();
-        this.items = this.getItems();
-        this.myitemList = this.getmyItemList();
     }
-
-    // 토탈화면 : 초기화 0, 금액 +,-
-    // 유저 코인 : + , -
-    // 자판기 코인 : + , -
-    // 아이템 : 가격 변경, 재고 변경(구매시 -1, 재고조절)
-    // 구매아이템 리스트 : 구매 아이템 추가, 삭제
    
     // 토탈화면
     addTotalAmount(coin){
-        this.totalAmount += coin;
-        this.saveData('totalAmount', this.totalAmount);
+        this.saveData('totalAmount', this.getTotalAmount() + coin);
     }
+
     removeTotalAmount(amount){
-        this.totalAmount -= amount;
         //금액은 컨트롤러에서
-        this.saveData('totalAmount', this.totalAmount);
+        this.saveData('totalAmount', this.getTotalAmount() - amount);
     }
 
     // 자판기 코인
     addMachineCoins(coin){
-        this.machineCoins[coin] += 1;
-        this.saveData('machineCoinCount', this.machineCoins);
+        const machineCoin = this.getMachineCoinCount();
+        machineCoin[coin] += 1;
+        this.saveData('machineCoinCount', machineCoin);
     }
     // 자판기 코인은 여러개 빠질 수 있으므로 conut 사용
     removeMachineCoins(coin ,count){
-        this.machineCoins[coin] -= count;
-        this.saveData('machineCoinCount', this.machineCoins);
+        const machineCoin = this.getMachineCoinCount();
+        machineCoin[coin] -= count;
+        this.saveData('machineCoinCount', machineCoin);
     }
 
     // 유저 코인
     addUserCoins(coin ,count){
-        this.userCoins[coin] += count;
-        this.saveData('userCoinCount', this.userCoins);
+        const userCoin = this.getUserCoinCount();
+        userCoin[coin] += count;
+        this.saveData('userCoinCount', userCoin);
     }
     removeUserCoins(coin){
-        this.userCoins[coin] -= 1;
-        this.saveData('userCoinCount', this.userCoins);
+        const userCoin = this.getUserCoinCount();
+        userCoin[coin] -= 1;
+        this.saveData('userCoinCount', userCoin);
+    }
+
+    // 인덱스를 파라미터로 받는 겟아이템 유틸 작성, 사용해서 에드스톡을 데이터를 이원화 하지않고 다시 작성
+    // 코드가 늘어나더라도 안전하게, 가독성, 이원화를 최대한 피하도록
+    getItem(index){
+        const items = this.getItems();
+        return items[index];
+    }
+    setItem(item,index){
+        const items = this.getItems();
+        items[index] = item;
+        this.saveData('items',items);
     }
 
     // 재고
     addStock(itemIndex, count) {
-        this.items[itemIndex].stock = count;
-        this.saveData('items', this.items);
+        const item = this.getItem(itemIndex);
+        item.stock = count;
+        this.setItem(item, itemIndex);
     }
     removeStock(itemIndex) {
-        this.items[itemIndex].stock -= 1;
-        this.saveData('items', this.items);
+        const item = this.getItem(itemIndex);
+        item.stock -= 1;
+        this.setItem(item, itemIndex);
     }
 
     // 아이템 가격
     updatePrices(itemIndex, priceChange) {
-        this.items[itemIndex].price = priceChange;
-        this.saveData('items', this.items);
+        const item = this.getItem(itemIndex);
+        item.price = priceChange;
+        this.setItem(item, itemIndex);
     }
     
     // 구매한 아이템
     addMyItem(itemIndex){
-        this.myitemList.push(this.items[itemIndex].image);
-        this.saveData('myItemList', this.myitemList);
+        const myitemList = this.getmyItemList();
+        const item = this.getItem(itemIndex);
+        myitemList.push(item.image);
+        this.saveData('myItemList', myitemList);
     }
     removeMyItem(itemIndex) {
-        this.myitemList.spilce(itemIndex, 1);
-        this.saveData('myItemList', this.myitemList);
+        const myitemList = this.getmyItemList();
+        myitemList.splice(itemIndex, 1);
+        this.saveData('myItemList', myitemList);
     }
 
-    // get, set
+    // get
+
     getTotalAmount() {
         return this.readData('totalAmount');
     }
@@ -94,5 +105,4 @@ export default class Model extends LocalStorage {
     getmyItemList() {
         return this.readData('myItemList');
     }
-
 }

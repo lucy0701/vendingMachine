@@ -4,12 +4,13 @@ export default class Controller {
         this.m = model;
         
         this.init();
-        
+
         this.addCoinToTotalAmount();
         this.activatePurchase();
         // this.handleBalanceRefund();
         this.activateManagerMode();
 
+        this.v.setupmodalPop(this.v.popUpBtns);
     }
     
     init(){
@@ -19,25 +20,11 @@ export default class Controller {
         this.machineCoins = this.m.getMachineCoinCount();
         this.items = this.m.getItems();
         this.getItemList = this.m.getmyItemList();
-        
-        // 토탈 화면
+
+        this.v.initItems(this.items);
+        this.v.initCoins(this.userCoins, this.v.renderUserCoin, this.v.coinsBox);
+        this.v.initCoins(this.machineCoins, this.v.renderMachineCoin, this.v.machineCoin);
         this.v.updateTotalScreen(this.total);
-
-        // 아이템
-        this.v.updateItemInfo(this.items);
-        this.v.displayItemPriceInfo();
-        this.v.dispayItemImg();
-        this.v.itemStockCount();
-
-        // 코인
-        this.v.updateCoinInfo();
-        this.v.updateUserCoinCount(this.userCoins);
-        this.v.updateMachineCoinCount(this.machineCoins);
-
-        // 관리자
-        this.v.openManagerPage();
-        this.v.onBuyBtn(this.items,this.total);
-        this.v.showSoldOut(this.items);
     }
 
     // 동전 투입

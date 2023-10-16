@@ -2,119 +2,118 @@ export default class View {
     constructor() {
         // 모달
         this.popUpBtns = document.querySelectorAll('.popUpBtn');
-        this.setupmodalPop(this.popUpBtns);
 
         // 코인
         this.coinBtns = document.querySelectorAll('.userCoin');
-        this.userCoin = document.querySelectorAll('.userCoinCount');
 
         // 자판기 외부
+        this.topBody = document.querySelector('.topBody');
+        this.coinsBox = document.querySelector('.coinsBox');
         this.totalNum = document.querySelector('.totalNum');
         this.soldOuts = document.querySelectorAll('.soldOut');
-        this.itemPrice = document.querySelectorAll('.price');
-        this.itemImgPrint = document.querySelectorAll('.itemImgPrint');
         this.buyBtns = document.querySelectorAll('.buyBtn');
         this.dropItem = document.querySelector('.dropItem');
         this.inventory = document.querySelector('#inventory');
         this.returnCoin = document.querySelector('.returnCoin');
 
         // 자판기 내부
-        this.itemStock = document.querySelectorAll('.itemStock');
         this.machineCoin = document.querySelector('.machineCoin');
 
         // 관리자
         this.itemNum = document.querySelector('#itemNum');
         this.stockChange = document.querySelector('#stockChange');
         this.priceChange = document.querySelector('#priceChange');
-        this.imageChange = document.querySelector('#imageChange');
         this.managerPage = document.querySelector('#managerPage');
 
     }
 
+    initItems(items){
+        let itemBoxes = '';
+        let ManagerSelectOption = '';
+        items.forEach(item => {
+            itemBoxes += this.renderItem(item);
+            ManagerSelectOption += this.renderManagerSelectOption(item);
+        });
+        this.topBody.innerHTML = itemBoxes;
+        this.itemNum.innerHTML = `
+            <option disabled selected value="default">아이템 선택</option>
+            ${ManagerSelectOption}
+        `;
+    }
+    
+    initCoins(coins,renderCoin,elem){
+        let coinsBoxes = '';
+        let coinName = Object.keys(coins);
+        coinName.forEach(coin => {
+            coinsBoxes += renderCoin(coins,coin);
+        });
+        elem.innerHTML = coinsBoxes;
+    }
+
+    // 아이템
+    renderItem(item){
+        return `
+            <div class="itemBox">
+                <div class="itemImg">
+                    <p class="soldOut">sold out</p>
+                    <div class="price">${item.price}</div>
+                    <div class="itemStock">${item.stock}</div>
+                    <img class="itemImgPrint" src=${item.image} />
+                </div>
+                <button class="buyBtn">구애 하기</button>   
+            </div>
+        `;
+    }
+
+    // 관리자
+    renderManagerSelectOption(item){
+        return `<option name='itemNum' value=${item.itemName}>${item.itemName}</option>`;
+    }
+
+    // 유저 코인
+    renderUserCoin(userCoins,coin){
+        return `
+            <button class="userCoin" value=${coin}>${coin}</button>
+            <p class="userCoinCount">${userCoins[coin]}</p>
+        `;
+    }
+    // 자판기 코인
+    renderMachineCoin(machineCoins, coin) {
+        return `[ ${coin} : ${machineCoins[coin]} ]`;
+    }
 
     // 토탈 화면
-    updateTotalScreen($total){
-
-        this.totalNum.innerHTML = $total;
-    }
-    // 상품
-    updateItemInfo($items){
-
-        // 가격
-        this.displayItemPriceInfo = () => {
-            for ( let i = 0; i < this.itemPrice.length; i++ ){
-                this.itemPrice[i].innerHTML = `${ $items[i].price }`;
-            }
-        }
-
-        // 아이템 이미지
-        this.dispayItemImg = () => {
-            for ( let i = 0; i < this.itemImgPrint.length; i++ ){
-                this.itemImgPrint[i].setAttribute( 'src', $items[i].image);
-                this.itemImgPrint[i].setAttribute( 'alt', $items[i].itemName);
-            }
-        }
-        // 매진 (on/off)
-        this.showSoldOut = ($items) => {
-            $items.forEach((item,i) =>{
-                if(item.stock === 0) {
-                    this.soldOuts[i].style.opacity = '1';
-                    this.buyBtns[i].style.backgroundColor = 'rgb(253, 233, 209)';
-                } else {
-                    this.soldOuts[i].style.opacity = '0';
-                }
-            });
-        }
-        // 상품 버튼
-        this.onBuyBtn = ($items,$total) => {
-            $items.forEach((item, i) => {
-                if($total >= item.price) {
-                    this.buyBtns[i].style.backgroundColor = 'rgb(60, 244, 192)';
-                } else if ($total < item.price) {
-                    this.buyBtns[i].style.backgroundColor= 'rgb(253, 233, 209)';
-                }
-            })
-        }
-        // 재고
-        this.itemStockCount = () => {
-            for ( let i = 0; i < this.itemStock.length; i++ ){
-                this.itemStock[i].innerHTML = `${ $items[i].stock}`;
-            }
-        }
-
-        // 드랍아이템
-        this.onDropItem = () => {
-            this.dropItem.style.display = 'block';
-        }
-        this.offDropItem = () => {
-            this.dropItem.style.display = 'none';
-        }
-
-    }
- 
-    //코인
-    updateCoinInfo(){
-
-        // 유저 코인
-        this.updateUserCoinCount = ($uCoin) => {
-            for ( let i = 0; i < this.userCoin.length; i++ ){
-                this.userCoin[i].innerHTML = `${$uCoin[Object.keys($uCoin)[i]]}`;
-            }
-        }
-
-        // 자판기 내 코인
-        this.updateMachineCoinCount = ($mCoin) => {
-            this.machineCoin.innerHTML = '';
-            for( let coinCount in $mCoin ) {
-                this.machineCoin.innerHTML += `[ ${coinCount} : ${$mCoin[coinCount]} ]`
-            }
-        }
+    updateTotalScreen(total){
+        this.totalNum.innerHTML = total;
     }
 
+    // 매진 (on/off)
+    showSoldOut(index){
+        this.soldOuts[index].style.opacity = '1';
+        this.buyBtns[index].style.backgroundColor = 'rgb(253, 233, 209)';
+    }
+    hideSoldOut(){
+        this.soldOuts[index].style.opacity = '0';
+    }
 
-    // 관리자 (재고 조정)
-    openManagerPage(){
+    // 상품 버튼 (활성화)
+    onBuyBtns(index){
+        this.buyBtns[index].style.backgroundColor = 'rgb(60, 244, 192)';
+    }
+    offBuyBtns(index){
+        this.buyBtns[index].style.backgroundColor= 'rgb(253, 233, 209)';
+    }
 
+    // 드랍아이템
+    showDropItemDisplay() {
+        this.dropItem.style.display = 'block';
+    }
+    hideDropItemDisplay() {
+        this.dropItem.style.display = 'none';
+    }
+
+    // 관리자 (초기화)
+    resetManagerPage(){
         this.managerPage.style.visibility = 'hidden';
         this.itemNum.value = 'default';
         this.priceChange.value = '';

@@ -13,7 +13,9 @@
 
     <header id="header">
       <h2 id="title">구애의 자판기</h2>
-      <button href="#managerPage" id="managerBtn" class="popUpBtn"><i class="fa-solid fa-gear"></i></button>
+      <button href="#managerPage" id="managerBtn" class="popUpBtn">
+        <i class="fa-solid fa-gear"></i>
+      </button>
     </header>
 
     <div id="main">
@@ -22,17 +24,7 @@
 
       <form name="managerPage" id="managerPage" method="POST" action="/src/view.js">
         <label for="itemNum">아이템</label>
-        <select name="itemNum" class="managerInput" id="itemNum">
-          <option disabled selected value="default">아이템 선택</option>
-          <option name='itemNum' value="여주155">여주</option>
-          <option name='itemNum' value="코순888">코순</option>
-          <option name='itemNum' value="루미700">루미</option>
-          <option name='itemNum' value="콩20">콩</option>
-          <option name='itemNum' value="재희95">재희</option>
-          <option name='itemNum' value="번18">번</option>
-          <option name='itemNum' value="승목1000">승목</option>
-          <option name='itemNum' value="죽순500">죽순</option>
-        </select>
+        <select name="itemNum" class="managerInput" id="itemNum"></select>
 
         <label for="stockChange">재고</label>
         <input type="number" name="stockChange" id="stockChange" class="managerInput" min="0" max="20">
@@ -47,89 +39,7 @@
       <!-- 자판기 본체 -->
       <div class="vendingBody">
         <!-- 본체 상단 -->
-        <div class="topBody">
-
-          <div class="itemBox">
-            <div class="itemImg">
-              <p class="soldOut">sold out</p>
-              <div class="price"></div>
-              <div class="itemStock"></div>
-              <img class="itemImgPrint">
-            </div>
-            <button class="buyBtn">구애 하기</button>   
-          </div>
-
-          <div class="itemBox">
-            <div class="itemImg">
-              <p class="soldOut">sold out</p>
-              <div class="price"></div>
-              <div class="itemStock"></div>
-              <img class="itemImgPrint">
-            </div>
-            <button class="buyBtn">구애 하기</button>
-          </div>
-
-          <div class="itemBox">
-            <div class="itemImg">
-              <p class="soldOut">sold out</p>
-              <div class="price"></div>
-              <div class="itemStock"></div>
-              <img class="itemImgPrint">
-            </div>
-            <button class="buyBtn">구애 하기</button>
-          </div>
-
-          <div class="itemBox">
-            <div class="itemImg">
-              <p class="soldOut">sold out</p>
-              <div class="price"></div>
-              <div class="itemStock"></div>
-              <img class="itemImgPrint">
-            </div>
-            <button class="buyBtn">구애 하기</button>
-          </div>
-
-          <div class="itemBox">
-            <div class="itemImg">
-              <p class="soldOut">sold out</p>
-              <div class="price"></div>
-              <div class="itemStock"></div>
-              <img class="itemImgPrint">
-            </div>
-            <button class="buyBtn">구애 하기</button>
-          </div>
-
-          <div class="itemBox">
-            <div class="itemImg">
-              <p class="soldOut">sold out</p>
-              <div class="price"></div>
-              <div class="itemStock"></div>
-              <img class="itemImgPrint">
-            </div>
-            <button class="buyBtn">구애 하기</button>
-          </div>
-
-          <div class="itemBox">
-            <div class="itemImg">
-              <p class="soldOut">sold out</p>
-              <div class="price"></div>
-              <div class="itemStock"></div>
-              <img class="itemImgPrint">
-            </div>
-            <button class="buyBtn">구애 하기</button>
-          </div>
-
-          <div class="itemBox">
-            <div class="itemImg">
-              <p class="soldOut">sold out</p>
-              <div class="price"></div>
-              <div class="itemStock"></div>
-              <img class="itemImgPrint">
-            </div>
-            <button class="buyBtn">구애 하기</button>
-          </div>
-
-        </div>
+        <div class="topBody"></div>
 
         <!-- 본체 하단 -->
         <div class="bottomBody">
@@ -158,7 +68,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <footer id="footer">
@@ -171,18 +80,7 @@
         <p class="footerText">COIN <i class="fa-solid fa-arrow-right"></i></p>
       </div>
       <!-- 유저 코인 팝업-->
-      <div id="wallet" class="coinsBox">
-        <button class="userCoin" value="1">1</button>
-        <p class="userCoinCount"></p>
-        <button class="userCoin" value="5">5</button>
-        <p class="userCoinCount"></p>
-        <button class="userCoin" value="10">10</button>
-        <p class="userCoinCount"></p>
-        <button class="userCoin" value="50">50</button>
-        <p class="userCoinCount"></p>
-        <button class="userCoin" value="100">100</button>
-        <p class="userCoinCount"></p>
-      </div>
+      <div id="wallet" class="coinsBox"></div>
       <!-- 유저 코인 팝업 버튼 -->
       <a href="#wallet" class="footerBtn popUpBtn">
         <i class="fa-regular fa-credit-card"></i>
