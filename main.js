@@ -8,5 +8,6 @@ const model = new Model;
 const view = new View;
 const controller = new Controller (model, view );
 
-window.model = model;
-window.view = view;
+// window.model = model;
+// window.view = view;
+// window.controller = controller;

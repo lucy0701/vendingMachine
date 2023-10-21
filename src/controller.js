@@ -1,184 +1,172 @@
 export default class Controller {
-    constructor(model, view) {
-        this.v = view;
-        this.m = model;
+  constructor(model, view) {
+    this.m = model;
+    this.v = view;
+
+    this.init();
+    this.initEventHandlers();
+  }
+
+  init(){
+    const totalAmount = this.m.getTotalAmount();
+    const userCoins = this.m.getUserCoinCount();
+    const machineCoins = this.m.getMachineCoinCount();
+    const items = this.m.getItems();
+    const myItemList = this.m.getMyItemList();
+
+    this.v.initItems(items);
+    this.v.initCoins(userCoins, machineCoins);
+    this.v.updateTotalScreen(totalAmount);
+    this.v.registerBuyBtn(totalAmount,items);
+
+    this.v.updateMyItemList(myItemList);
+
+    this.v.setupmodalPop(this.v.popUpBtns);
+  }
+
+  initEventHandlers() {
+      this.registerButtonsEvent(this.v.coinBtns,this.onClickCoinBtns);
+      this.registerButtonsEvent(this.v.buyBtns,this.onClickPurchase);
+      this.registerButtonEvent(this.v.dropItem,this.onClickMyItem);
+
+      this.managerPage();
+      this.registerButtonEvent(this.v.managerPageCloseBtn, this.onClickManagerPageCloseBtn);
+
+      this.registerButtonEvent(this.v.returnCoin, this.onClickReturnCoins);
+  }
+
+  registerButtonsEvent(buttons,onClick) {
+    buttons.forEach((btn, i) => {
+      btn.addEventListener('click', () => onClick(i));
+    });
+  }
+  registerButtonEvent(button,onClick) {
+    button.addEventListener('click', onClick);
+  }
+
+  onClickCoinBtns = (index) => {
+    let totalAmount = this.m.getTotalAmount();
+    let userCoins = this.m.getUserCoinCount();
+    let machineCoins = this.m.getMachineCoinCount();
+    const items = this.m.getItems();
+
+    const coinName = Object.keys(userCoins)[index];
+    const coin = parseInt(coinName);
+    const userCoinCount = userCoins[coinName];
+
+    if (userCoinCount > 0 && totalAmount < 10000){
+
+      totalAmount = this.m.addTotalAmount(coin);
+      machineCoins = this.m.addMachineCoins(coinName);
+      userCoins = this.m.removeUserCoins(coinName);
+
+    } else if (totalAmount >= 10000) {
+      alert ('최대 금액을 넘었습니다!');
+    }
+
+    this.v.updateTotalScreen(totalAmount);
+    this.v.updateCoins(userCoins, machineCoins);
+    this.v.registerBuyBtn(totalAmount,items);
+  }
+
+  onClickPurchase = (index) => {
+    let totalAmount = this.m.getTotalAmount();
+    let items = this.m.getItems();
+    const item = items[index];
+
+    if (totalAmount >= item.price && 0 < item.stock) {
+
+      totalAmount = this.m.removeTotalAmount(item.price);
+      items = this.m.removeStock(index);
+      this.m.addMyItem(index);
+      this.v.showDropItemDisplay(item);
+
+    } else if (item.stock === 0) {
+      alert ('늦었어..사랑은 타이밍이야');
+    } else if (totalAmount < item.price) {
+      alert ('이 사람을 가지기엔 넌 부족해');
+    }
+    this.v.updateTotalScreen(totalAmount);
+    this.v.updateItems(items);
+    this.v.registerBuyBtn(totalAmount,items);
+  }
+  
+  onClickMyItem = () => {
+    const myItemList = this.m.getMyItemList();
+    this.v.hideDropItemDisplay();
+    this.v.updateMyItemList(myItemList);
+
+    this.registerButtonsEvent(this.v.myItemList,this.onClickDeleteMyItem);
+  }
+
+  onClickDeleteMyItem = (index) => {
+    const deleteChcek = confirm('헤어질꺼양?');
+    if (deleteChcek){
+      this.v.removeMyItem(index);
+      this.m.deleteMyItem(index);
+      alert('얘도 너 싫데');
+    } else {
+      alert ('다시 잘 해봐');
+    }
+
+  }
+
+  // 환불 처리
+  onClickReturnCoins = () => {
+    let totalAmount = this.m.getTotalAmount();
+    let userCoins = this.m.getUserCoinCount();
+    let machineCoins = this.m.getUserCoinCount();
+    const userCoinKey = Object.keys(userCoins);
+
+    userCoinKey.reverse().forEach((coin,count) => {
+      count = parseInt(totalAmount/coin);
+      machineCoins = this.m.removeMachineCoins(coin,count);
+      userCoins= this.m.addUserCoins(coin,count);
+      totalAmount = this.m.removeTotalAmount(parseInt(count * coin));
+      this.v.updateTotalScreen(totalAmount);
+      this.v.updateCoins(userCoins, machineCoins);
+      
+    });
+
+  }
+
+
+// 관리자
+managerPage(){
+    const items = this.m.getItems();
+    const getItemSelectValue = () => {
+      const selectValue = this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
+      return items.find(item => item.itemName === selectValue);
+    }
+
+    this.v.itemNum.addEventListener('change', () => {
+      const item = this.m.getItem();
+      const seletItem = getItemSelectValue();
+      if (seletItem !== undefined ) {
+        this.v.priceChange.value = seletItem.price;
+        this.v.stockChange.value = seletItem.stock;
+      } else {
+        alert ('잘못 된 접근 입니다.');
+        this.v.initManagerPage();
+      }
+    });
+
+    this.v.managerPage.addEventListener('submit',(e) => {
+      e.preventDefault();
+      const seletItem = getItemSelectValue();
+
+      if (seletItem) {
+        seletItem.price = this.v.priceChange.value;
+        seletItem.stock = this.v.stockChange.value;
         
-        this.init();
-
-        this.addCoinToTotalAmount();
-        this.activatePurchase();
-        // this.handleBalanceRefund();
-        this.activateManagerMode();
-
-        this.v.setupmodalPop(this.v.popUpBtns);
-    }
-    
-    init(){
-        // 호출
-        this.total = this.m.getTotalAmount();      
-        this.userCoins = this.m.getUserCoinCount();
-        this.machineCoins = this.m.getMachineCoinCount();
-        this.items = this.m.getItems();
-        this.getItemList = this.m.getmyItemList();
-
-        this.v.initItems(this.items);
-        this.v.initCoins(this.userCoins, this.v.renderUserCoin, this.v.coinsBox);
-        this.v.initCoins(this.machineCoins, this.v.renderMachineCoin, this.v.machineCoin);
-        this.v.updateTotalScreen(this.total);
-    }
-
-    // 동전 투입
-    addCoinToTotalAmount() {
-        this.v.coinBtns.forEach((coinBtn, i) => {
-            coinBtn.addEventListener('click',() => {
-                const coinName = Object.keys(this.userCoins)[i];
-                const coins = parseInt(coinName);
-                const userCoinCount = this.userCoins[coinName];
-
-                if ( userCoinCount > 0 && this.total < 10000){
-                    this.m.addTotalAmount(coins);
-                    this.m.addMachineCoins(coinName);
-                    this.m.removeUserCoins(coinName);
-
-                } else if (this.total >= 10000) {
-                    alert ('최대 금액을 넘었습니다!');
-                }
-                this.init();
-            });
-        }); 
-    }
-    
-
-    // 구매
-    activatePurchase(){
-
-        this.enableBuyButton = () => {
-            this.v.buyBtns.forEach((buyBtn, i) => {
-                buyBtn.addEventListener('click',() => {
-                    const item = this.items[i];
-
-                    if ( this.total >= item.price && 0 < item.stock ) {
-                        this.v.onDropItem();
-                        this.m.removeTotalAmount(item.price);
-                        this.m.removeStock(i);
-                        this.getDropItem(i);
-                    } else if (item.stock === 0) {
-                        alert ('다 팔렸어요. 다음에 이용해주세요.');
-                    } else if (this.total < item.price) {
-                        alert ('금액이 부족합니다');
-                    }
-                    this.init();
-                });
-            });
-        }
-        this.enableBuyButton();
-
-        this.getDropItem = (itemIndex) => {
-            const myItem = document.createElement('img');
-            const itemImg = this.items[itemIndex].image;
-            
-            this.v.dropItem.setAttribute('src', itemImg);
-
-            this.v.dropItem.addEventListener('click',() => {
-                this.v.offDropItem();
-                this.m.addMyItem(itemIndex);
-                myItem.classList.add('myItem');
-                myItem.setAttribute('src', itemImg);
-                this.v.inventory.appendChild(myItem);
-            });
-            this.init();
-        }
-
-    }
-
-    // 환불 처리
-    // handleBalanceRefund(){
-    //     const returnCoins = () => {
-    //         const machineCoinKey = Object.keys(this.machineCoin);
-    //         const userCoinKey = Object.keys(this.userCoin);
-
-    //         switch(this.total > 0) {
-    //             case (this.total >= 100) :
-    //                 this.total -= 100;
-    //                 this.machineCoin[machineCoinKey[4]] = this.machineCoin[machineCoinKey[4]] - 1;
-    //                 this.userCoin[userCoinKey[4]] = this.userCoin[userCoinKey[4]] + 1;
-    //                 break;
-    //             case (this.total < 100 && this.total >= 50) :
-    //                 this.total -= 50;
-    //                 this.machineCoin[machineCoinKey[3]] = this.machineCoin[machineCoinKey[3]] - 1;
-    //                 this.userCoin[userCoinKey[3]] = this.userCoin[userCoinKey[3]] + 1;
-    //                 break;
-    //             case (this.total < 50 && this.total >= 10) :
-    //                 this.total -= 10;
-    //                 this.machineCoin[machineCoinKey[2]] = this.machineCoin[machineCoinKey[2]] - 1;
-    //                 this.userCoin[userCoinKey[2]] = this.userCoin[userCoinKey[2]] + 1;
-    //                 break;
-    //             case (this.total < 10 && this.total >= 5) :
-    //                 this.total -= 5;
-    //                 this.machineCoin[machineCoinKey[1]] = this.machineCoin[machineCoinKey[1]] - 1;
-    //                 this.userCoin[userCoinKey[1]] = this.userCoin[userCoinKey[1]] + 1;
-    //                 break;
-    //             case (this.total < 5 && this.total >= 0) :
-    //                 this.total -= 1;
-    //                 this.machineCoin[machineCoinKey[0]] = this.machineCoin[machineCoinKey[0]] - 1;
-    //                 this.userCoin[userCoinKey[0]] = this.userCoin[userCoinKey[0]] + 1;
-    //                 break;
-    //         }
-    //         this.init();
-    //     }
-    //     this.returnBalance = () => {
-    //         this.v.returnCoin.addEventListener('click',() => {
-    //             while(true) {
-    //                 if ( this.total > 0) {
-    //                     returnCoins();
-    //                 } else if (this.total === 0) {
-    //                     break;
-    //                 }
-    //             }
-    //         });
-    //     } 
-    //     this.returnBalance();
-    // }
-
-
-    // 관리자
-    activateManagerMode(){
-
-        const getItemSelectValue = () => {
-            const selectValue = this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
-            return this.items.find(item => item.itemName === selectValue);
-        }
-
-        this.v.itemNum.addEventListener('change', () => {
-            const seletItem = getItemSelectValue();
-
-            if (seletItem !== undefined ) {
-
-                this.v.priceChange.value = seletItem.price;
-                this.v.stockChange.value = seletItem.stock;
-            } else {
-                alert ('잘못 된 접근 입니다.');
-                this.v.openManagerPage();
-            }
-        });
-
-        this.v.managerPage.addEventListener('submit',(e) => {
-            e.preventDefault();
-            const seletItem = getItemSelectValue();
-
-            if (seletItem) {
-                seletItem.price = this.v.priceChange.value;
-                seletItem.stock = this.v.stockChange.value;
-                
-                this.v.displayItemPriceInfo(seletItem.price);
-                this.v.itemStockCount(seletItem.stock);
-                alert ('저장 완료');
-            }
-            
-            this.v.openManagerPage();
-            this.init();
-
-        });
-    }
-
+        this.m.setItems(items);
+        this.v.updateItems(items);
+        alert ('저장 완료');
+      }
+    });
+  }
+  onClickManagerPageCloseBtn = () => {
+    this.v.initManagerPage();
+  }
 }
+
