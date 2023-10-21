@@ -19,7 +19,6 @@ constructor() {
   this.stockChange = document.querySelector('#stockChange');
   this.priceChange = document.querySelector('#priceChange');
   this.managerPage = document.querySelector('#managerPage');
-  this.managerPageCloseBtn = document.querySelector('.closeBtn')
 
 }
 
@@ -29,7 +28,7 @@ constructor() {
     // 4. 각 이벤트별 가져올 HTML 요소의 스타일 변경
     // - 솔드아웃 스티커, 구매 활성화 된 버튼, 드랍아이템 출력, 관리자페이지 변경 후 초기화
 
-// 렌더링
+  // 렌더링
   initItems(items){
     let itemBoxes = '';
     let ManagerSelectOption = '';
@@ -87,7 +86,7 @@ constructor() {
     this.totalNum.innerHTML = total;
   }
 
-// 아이템
+  // 아이템
   renderItem(item){
     return `
       <div class="itemBox">
@@ -170,7 +169,6 @@ constructor() {
     this.priceChange.value = '';
     this.stockChange.value = '';
   }
-  
 
   // 모달 (다음엔 dialog로 해보기)
   setupmodalPop(popBtns) {

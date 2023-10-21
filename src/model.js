@@ -54,11 +54,11 @@ export default class Model extends LocalStorage {
   }
 
   // 재고
-  // addStock(itemIndex, count) {
-  //   const item = this.getItem(itemIndex);
-  //   item.stock = count;
-  //   return this.setItem(item, itemIndex);
-  // }
+  addStock(itemIndex, count) {
+    const item = this.getItem(itemIndex);
+    item.stock = count;
+    return this.setItem(item, itemIndex);
+  }
   removeStock(itemIndex) {
     const item = this.getItem(itemIndex);
     item.stock -= 1;
@@ -66,11 +66,11 @@ export default class Model extends LocalStorage {
   }
 
   // 아이템 가격
-  // updatePrices(itemIndex, priceChange) {
-  //   const item = this.getItem(itemIndex);
-  //   item.price = priceChange;
-  //   return this.setItem(item, itemIndex);
-  // }
+  updatePrices(itemIndex, priceChange) {
+    const item = this.getItem(itemIndex);
+    item.price = priceChange;
+    return this.setItem(item, itemIndex);
+  }
 
   // 임시
   setItems(value) {

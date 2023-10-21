@@ -28,11 +28,13 @@ export default class Controller {
       this.registerButtonsEvent(this.v.coinBtns,this.onClickCoinBtns);
       this.registerButtonsEvent(this.v.buyBtns,this.onClickPurchase);
       this.registerButtonEvent(this.v.dropItem,this.onClickMyItem);
-
-      this.managerPage();
-      this.registerButtonEvent(this.v.managerPageCloseBtn, this.onClickManagerPageCloseBtn);
-
       this.registerButtonEvent(this.v.returnCoin, this.onClickReturnCoins);
+
+      this.registerChangeEvent();
+      this.registerSubmitEvent();
+
+
+
   }
 
   registerButtonsEvent(buttons,onClick) {
@@ -130,43 +132,76 @@ export default class Controller {
 
   }
 
+initManagerPageValue = () => {
+  const items = this.m.getItems();
+  const selectValue = this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
+  items.forEach(item => {
+    if (selectValue === item.itemName){
+      this.v.priceChange.value = item.price;
+      this.v.stockChange.value = item.stock;
+    }
+  });
+}
+inputManagerPageValue = () => {
+  const items = this.m.getItems();
+  const selectValue = this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
+  items.forEach((item,i) => {
+    if (selectValue === item.itemName){
+      this.m.updatePrices(i, this.v.priceChange.value);
+      this.m.addStock(i, this.v.stockChange.value);
+    }
+  });
+  this.v.updateItems(this.m.getItems()); 
+}
+
+registerChangeEvent(){
+  this.v.itemNum.addEventListener('change', () => {
+    this.initManagerPageValue();
+  });
+}
+registerSubmitEvent(){
+  this.v.managerPage.addEventListener('submit',(e) => {
+    e.preventDefault();
+    this.inputManagerPageValue();
+    this.v.initManagerPage();
+    alert('저장 완료');
+  });
+}
 
 // 관리자
-managerPage(){
-    const items = this.m.getItems();
-    const getItemSelectValue = () => {
-      const selectValue = this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
-      return items.find(item => item.itemName === selectValue);
-    }
+// managerPage(){
+//     const items = this.m.getItems();
+//     const getItemSelectValue = () => {
+//       const selectValue = this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
+//       return items.find(item => item.itemName === selectValue);
+//     }
 
-    this.v.itemNum.addEventListener('change', () => {
-      const item = this.m.getItem();
-      const seletItem = getItemSelectValue();
-      if (seletItem !== undefined ) {
-        this.v.priceChange.value = seletItem.price;
-        this.v.stockChange.value = seletItem.stock;
-      } else {
-        alert ('잘못 된 접근 입니다.');
-        this.v.initManagerPage();
-      }
-    });
+//     this.v.itemNum.addEventListener('change', () => {
+//       const item = this.m.getItem();
+//       const seletItem = getItemSelectValue();
+//       if (seletItem !== undefined ) {
+//         this.v.priceChange.value = seletItem.price;
+//         this.v.stockChange.value = seletItem.stock;
+//       } else {
+//         alert ('잘못 된 접근 입니다.');
+//         this.v.initManagerPage();
+//       }
+//     });
 
-    this.v.managerPage.addEventListener('submit',(e) => {
-      e.preventDefault();
-      const seletItem = getItemSelectValue();
+//     this.v.managerPage.addEventListener('submit',(e) => {
+//       e.preventDefault();
+//       const seletItem = getItemSelectValue();
 
-      if (seletItem) {
-        seletItem.price = this.v.priceChange.value;
-        seletItem.stock = this.v.stockChange.value;
+//       if (seletItem) {
+//         seletItem.price = this.v.priceChange.value;
+//         seletItem.stock = this.v.stockChange.value;
         
-        this.m.setItems(items);
-        this.v.updateItems(items);
-        alert ('저장 완료');
-      }
-    });
-  }
-  onClickManagerPageCloseBtn = () => {
-    this.v.initManagerPage();
-  }
+//         this.m.setItems(items);
+//         this.v.updateItems(items);
+//         alert ('저장 완료');
+//       }
+//     });
+//   }
+
 }
 
