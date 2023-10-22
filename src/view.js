@@ -22,12 +22,6 @@ constructor() {
 
 }
 
-    // 1. 아이템 리스트 화면 출력 (아이템, 가격, 구매버튼, 재고수량)
-    // 2. 코인 화면 출력 (유저 코인, 자판기 코인, 토탈 화면)
-    // 3. 메니저 페이지 화면
-    // 4. 각 이벤트별 가져올 HTML 요소의 스타일 변경
-    // - 솔드아웃 스티커, 구매 활성화 된 버튼, 드랍아이템 출력, 관리자페이지 변경 후 초기화
-
   // 렌더링
   initItems(items){
     let itemBoxes = '';
@@ -41,7 +35,7 @@ constructor() {
       <option disabled selected value="default">아이템 선택</option>
       ${ManagerSelectOption}
     `;
-
+    
     this.buyBtns = document.querySelectorAll('.buyBtn');
     this.soldOuts = document.querySelectorAll('.soldOut');
 
@@ -171,8 +165,7 @@ constructor() {
   }
 
   // 모달 (다음엔 dialog로 해보기)
-  setupmodalPop(popBtns) {
-
+  onClickModalPop(popBtns) {
     popBtns.forEach((popBtn) => {
       popBtn.addEventListener('click',() => {
         const modal = popBtn.getAttribute('href');
