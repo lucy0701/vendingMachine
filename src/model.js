@@ -72,12 +72,6 @@ export default class Model extends LocalStorage {
     return this.setItem(item, itemIndex);
   }
 
-  // 임시
-  setItems(value) {
-    this.saveData('items', value);
-  }
-
-
   // 구매한 아이템
   addMyItem(itemIndex){
     const myitemList = this.getMyItemList();
