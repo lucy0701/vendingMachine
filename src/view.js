@@ -1,11 +1,15 @@
 export default class View {
 constructor() {
   // 모달
-  this.popUpBtns = document.querySelectorAll('.popUpBtn');
+  this.walletModal = document.querySelector('#walletModal');
+  this.walletBtn = document.querySelector('#walletBtn');
+  this.inventoryModal = document.querySelector('#inventoryModal');
+  this.inventoryBtn = document.querySelector('#inventoryBtn');
+  this.managerBtn = document.querySelector('#managerBtn');
 
   // 자판기 외부
   this.topBody = document.querySelector('.topBody');
-  this.coinsBox = document.querySelector('.coinsBox');
+  this.wallet = document.querySelector('#wallet');
   this.totalNum = document.querySelector('.totalNum');
   this.dropItem = document.querySelector('.dropItem');
   this.inventory = document.querySelector('#inventory');
@@ -26,32 +30,28 @@ constructor() {
   initItems(items){
     let itemBoxes = '';
     let ManagerSelectOption = '';
-    items.forEach(item => {
-      itemBoxes += this.renderItem(item);
-      ManagerSelectOption += this.renderManagerSelectOption(item);
+    items.forEach((item,i) => {
+      itemBoxes += this.renderItem(item,i);
+      ManagerSelectOption += this.renderManagerSelectOption(item,i);
     });
     this.topBody.innerHTML = itemBoxes;
     this.itemNum.innerHTML = `
       <option disabled selected value="default">아이템 선택</option>
       ${ManagerSelectOption}
     `;
-    
-    this.buyBtns = document.querySelectorAll('.buyBtn');
-    this.soldOuts = document.querySelectorAll('.soldOut');
 
     this.prices = document.querySelectorAll('.price');
     this.itemStocks = document.querySelectorAll('.itemStock');
   }
   initCoins(userCoins,machineCoins){
-    const coinKeys = Object.keys(userCoins);
     let coinsBoxes = '';
     let machineCoinBoxes = '';
 
-    coinKeys.forEach(coin => {
-      coinsBoxes += this.renderUserCoin(userCoins,coin);
+    Object.keys(userCoins).forEach((coin,i) => {
+      coinsBoxes += this.renderUserCoin(userCoins,coin,i);
       machineCoinBoxes += this.renderMachineCoin(machineCoins,coin);
     });
-    this.coinsBox.innerHTML = coinsBoxes;
+    this.wallet.innerHTML = coinsBoxes;
     this.machineCoin.innerHTML = machineCoinBoxes;
 
     this.coinBtns = document.querySelectorAll('.userCoinBtn');
@@ -67,9 +67,8 @@ constructor() {
   }
 
   updateCoins(userCoins,machineCoins){
-    const coinKeys = Object.keys(userCoins);
     let machineCoinBoxes = '';
-    coinKeys.forEach((coin,i) => {
+    Object.keys(userCoins).forEach((coin,i) => {
       this.userCoinCount[i].textContent = `${userCoins[coin]}`;
       machineCoinBoxes += this.renderMachineCoin(machineCoins,coin);
     });
@@ -80,8 +79,18 @@ constructor() {
     this.totalNum.innerHTML = total;
   }
 
+  // 구매이미지 업데이트
+  updateMyItemList(myItemList) {
+    let addMyitem = '';
+    myItemList.forEach((myItem,i) => {
+      addMyitem += this.addMytemList(myItem,i);
+    });
+    this.inventory.innerHTML = addMyitem;
+    this.myItemList = document.querySelectorAll('.myItem');
+  }
+
   // 아이템
-  renderItem(item){
+  renderItem(item,index){
     return `
       <div class="itemBox">
         <div class="itemImg">
@@ -90,18 +99,18 @@ constructor() {
           <div class="itemStock">${item.stock}</div>
           <img class="itemImgPrint" src=${item.image} />
         </div>
-        <button class="buyBtn">고백 박기</button>   
+        <button class="buyBtn" data-index="${index}" >고백 박기</button>   
       </div>
     `;
   }
   // 관리자
-  renderManagerSelectOption(item){
-    return `<option name='itemNum' value=${item.itemName}>${item.itemName}</option>`;
+  renderManagerSelectOption(item,index){
+    return `<option name='itemNum' value=${index}>${item.itemName}</option>`;
   }
   // 유저 코인
-  renderUserCoin(userCoins,coin){
+  renderUserCoin(userCoins,coin,index){
     return `
-      <button class="userCoinBtn" value=${coin}>${coin}</button>
+      <button class="userCoinBtn" data-index="${index}" value=${coin}>${coin}</button>
       <p class="userCoinCount">${userCoins[coin]}</p>
     `;
   }
@@ -109,19 +118,27 @@ constructor() {
   renderMachineCoin(machineCoins, coin) {
     return `[ ${coin} : ${machineCoins[coin]} ]`;
   }
+  // 추가
+  addMytemList(myItem,index) {
+    return `
+      <img class='myItem' data-index="${index}" src=${myItem} />
+    `;
+  }
 
   // 스타일 
   // 구매 버튼 활성
-  registerBuyBtn(totalAmount,items) {
+  updateBuyBtn(totalAmount,items) {
+    const buyBtns = document.querySelectorAll('.buyBtn');
+    const soldOuts = document.querySelectorAll('.soldOut');
     items.forEach ((item,i) => {
       if (totalAmount < item.price) {
-        this.buyBtns[i].style.backgroundColor= 'rgb(253, 233, 209)';
+        buyBtns[i].style.backgroundColor= 'rgb(253, 233, 209)';
       } else if(item.stock === 0 ){
-        this.soldOuts[i].style.opacity = '1';
-        this.buyBtns[i].style.backgroundColor = 'rgb(155, 155, 155)';
+        soldOuts[i].style.opacity = '1';
+        buyBtns[i].style.backgroundColor = 'rgb(155, 155, 155)';
       } else {
-        this.soldOuts[i].style.opacity = '0';
-        this.buyBtns[i].style.backgroundColor = 'rgb(60, 244, 192)';
+        soldOuts[i].style.opacity = '0';
+        buyBtns[i].style.backgroundColor = 'rgb(60, 244, 192)';
       }
     });
   }
@@ -135,48 +152,37 @@ constructor() {
     this.dropItem.style.display = 'none';
   }
 
-  // 추가
-  addMytemList(myItem) {
-    return `
-      <img class='myItem' src=${myItem} />
-    `;
-  }
 
-  // 리스트이미지 업데이트
-  updateMyItemList(myItemList) {
-    let addMyitem = '';
-    myItemList.forEach((myItem) => {
-      addMyitem += this.addMytemList(myItem);
-    });
-    this.inventory.innerHTML = addMyitem;
-    this.myItemList = document.querySelectorAll('.myItem');
-  }
 
   removeMyItem(index) {
     this.myItemList[index].remove();
   }
 
   // 관리자 (초기화)
-  initManagerPage(){
+  initManagerPageValue(){
     this.managerPage.style.visibility = 'hidden';
     this.itemNum.value = 'default';
     this.priceChange.value = '';
     this.stockChange.value = '';
   }
 
-  // 모달 (다음엔 dialog로 해보기)
-  onClickModalPop(popBtns) {
-    popBtns.forEach((popBtn) => {
-      popBtn.addEventListener('click',() => {
-        const modal = popBtn.getAttribute('href');
-        const modalPop = document.querySelector(modal);
-
-        if (modalPop.style.visibility === 'visible'){
-          modalPop.style.visibility = 'hidden';
-        } else {
-          modalPop.style.visibility = 'visible';                
-        }
-      });
-    });
+  // 모달
+  onClickModalBtn(btn,Modal) {
+    btn.addEventListener('click',() => {
+      if(Modal.open){
+        Modal.close();
+      } else {
+        Modal.show();
+      }
+    })
+  }
+  onClickManagerPageBtn() {
+    this.managerBtn.addEventListener('click',() => {
+      if (this.managerPage.style.visibility === 'visible'){
+        this.managerPage.style.visibility = 'hidden';
+      } else {
+        this.managerPage.style.visibility = 'visible';                
+      }
+    })
   }
 }

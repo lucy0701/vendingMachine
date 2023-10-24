@@ -13,15 +13,15 @@
 
     <header id="header">
       <h2 id="title">사랑의 자판기</h2>
-      <button href="#managerPage" id="managerBtn" class="popUpBtn">
+
+      <button id="managerBtn">
         <i class="fa-solid fa-gear"></i>
       </button>
     </header>
 
-    <div id="main">
-      <!-- 인벤토리 팝업 -->
-      <div id="inventory"></div>
 
+    <div id="main">
+      
       <form name="managerPage" id="managerPage" method="POST" action="/src/view.js">
         <label for="itemNum">아이템</label>
         <select name="itemNum" class="managerInput" id="itemNum"></select>
@@ -35,7 +35,6 @@
         <input type="submit" id="saveItem" value="저장" />
       </form>
 
-      
       <!-- 자판기 본체 -->
       <div class="vendingBody">
         <!-- 본체 상단 -->
@@ -71,20 +70,30 @@
     </div>
 
     <footer id="footer">
+      <!-- 인벤토리 팝업 -->
+      <dialog id="inventoryModal" >
+        <div id="inventory"></div>
+      </dialog>
+      
       <!-- 인벤토리 팝업 버튼 -->
-      <a href="#inventory" class="footerBtn popUpBtn">
+      <button id = "inventoryBtn" class="footerBtn">
         <i class="fa-solid fa-heart"></i>
-      </a>
+      </button>
+
       <div class="footerTextBox">
         <p class="footerText"> <i class="fa-solid fa-arrow-left"></i> INVENTORY</p>
         <p class="footerText">COIN <i class="fa-solid fa-arrow-right"></i></p>
       </div>
+
       <!-- 유저 코인 팝업-->
-      <div id="wallet" class="coinsBox"></div>
+      <dialog id="walletModal" >
+        <div id="wallet"></div>
+      </dialog>
+
       <!-- 유저 코인 팝업 버튼 -->
-      <a href="#wallet" class="footerBtn popUpBtn">
+      <button id = "walletBtn" class="footerBtn">
         <i class="fa-regular fa-credit-card"></i>
-      </a>
+      </button>
     </footer>
 
   </div>

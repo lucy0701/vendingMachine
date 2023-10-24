@@ -17,32 +17,29 @@ export default class Controller {
     this.v.initItems(items);
     this.v.initCoins(userCoins, machineCoins);
     this.v.updateTotalScreen(totalAmount);
-    this.v.registerBuyBtn(totalAmount, items);
+    this.v.updateBuyBtn(totalAmount, items);
     this.v.updateMyItemList(myItemList);
-    this.v.onClickModalPop(this.v.popUpBtns);
+
+    this.v.onClickModalBtn(this.v.walletBtn,this.v.walletModal);
+    this.v.onClickModalBtn(this.v.inventoryBtn,this.v.inventoryModal);
+    this.v.onClickManagerPageBtn();
   }
 
   initEventHandlers() {
-    this.registerButtonsEvent(this.v.coinBtns, this.onClickCoinBtns);
-    this.registerButtonsEvent(this.v.buyBtns, this.onClickPurchase);
-    this.registerButtonEvent(this.v.dropItem, this.onClickMyItem);
-    this.registerButtonEvent(this.v.returnCoin, this.onClickReturnCoins);
-    this.registerButtonsEvent(this.v.myItemList, this.onClickDeleteMyItem);
+    this.v.topBody.addEventListener('click', this.onClickPurchase);
+    this.v.wallet.addEventListener('click', this.onClickCoinBtns);
+    this.v.inventory.addEventListener('click', this.onClickDeleteMyItem);
 
-    this.registerChangeEvent();
-    this.registerSubmitEvent();
+    this.v.returnCoin.addEventListener('click',this.onClickReturnCoins)
+    this.v.dropItem.addEventListener('click', this.onClickMyItem);
+
+    this.v.itemNum.addEventListener('change', this.initManagerPageValue);
+    this.v.managerPage.addEventListener('submit', this.updateManagerPageValue);
   }
 
-  registerButtonsEvent(buttons, onClick) {
-    buttons.forEach((btn, i) => {
-      btn.addEventListener('click', () => onClick(i));
-    });
-  }
-  registerButtonEvent(button, onClick) {
-    button.addEventListener('click', onClick);
-  }
+  onClickCoinBtns = (e) => {
+    let index = e.target.dataset.index;
 
-  onClickCoinBtns = (index) => {
     let totalAmount = this.m.getTotalAmount();
     let userCoins = this.m.getUserCoinCount();
     let machineCoins = this.m.getMachineCoinCount();
@@ -60,44 +57,50 @@ export default class Controller {
     }
     this.v.updateTotalScreen(totalAmount);
     this.v.updateCoins(userCoins, machineCoins);
-    this.v.registerBuyBtn(totalAmount, items);
+    this.v.updateBuyBtn(totalAmount, items);
   };
 
-  onClickPurchase = (index) => {
+  onClickPurchase = (e) => {
+    let index = e.target.dataset.index;
     let totalAmount = this.m.getTotalAmount();
     let items = this.m.getItems();
-    const item = items[index];
-
-    if (totalAmount >= item.price && 0 < item.stock) {
-      totalAmount = this.m.removeTotalAmount(item.price);
-      items = this.m.removeStock(index);
-
-      this.m.addMyItem(index);
-      this.v.showDropItemDisplay(item);
-    } else if (item.stock === 0) {
-      alert('늦었어..사랑은 타이밍이야');
-    } else if (totalAmount < item.price) {
-      alert('이 사람을 가지기엔 넌 부족해');
+    
+    if(index !== undefined) {
+      const item = items[index];
+      if (totalAmount >= item.price && 0 < item.stock) {
+        totalAmount = this.m.removeTotalAmount(item.price);
+        items = this.m.removeStock(index);
+  
+        this.m.addMyItem(index);
+        this.v.showDropItemDisplay(item);
+      } else if (item.stock === 0) {
+        alert('늦었어..사랑은 타이밍이야');
+      } else if (totalAmount < item.price) {
+        alert('이 사람을 가지기엔 넌 부족해');
+      }
     }
+
     this.v.updateTotalScreen(totalAmount);
     this.v.updateItems(items);
-    this.v.registerBuyBtn(totalAmount, items);
+    this.v.updateBuyBtn(totalAmount, items);
   };
 
   onClickMyItem = () => {
     const myItemList = this.m.getMyItemList();
-
     this.v.hideDropItemDisplay();
     this.v.updateMyItemList(myItemList);
-    this.registerButtonsEvent(this.v.myItemList, this.onClickDeleteMyItem);
   };
 
-  onClickDeleteMyItem = (index) => {
-    const deleteChcek = confirm('헤어질꺼양? 환불 안해줄껀데도?');
-    if (deleteChcek) {
-      this.v.removeMyItem(index);
-      this.m.deleteMyItem(index);
+  onClickDeleteMyItem = (e) => {
+    const index = e.target.dataset.index;
+
+    if(index !== undefined) {
+      const deleteChcek = confirm('헤어질꺼양? 환불 안해줄껀데도?');
+      if (deleteChcek) {
+        this.v.removeMyItem(index);
+      }
     }
+
   };
 
   // 환불 처리
@@ -105,9 +108,8 @@ export default class Controller {
     let totalAmount = this.m.getTotalAmount();
     let userCoins = this.m.getUserCoinCount();
     let machineCoins = this.m.getUserCoinCount();
-    const userCoinKey = Object.keys(userCoins);
 
-    userCoinKey.reverse().forEach((coin, count) => {
+    Object.keys(userCoins).reverse().forEach((coin, count) => {
       count = parseInt(totalAmount / coin);
       machineCoins = this.m.removeMachineCoins(coin, count);
       userCoins = this.m.addUserCoins(coin, count);
@@ -118,44 +120,29 @@ export default class Controller {
     });
   };
 
-  inputManagerPageValue = () => {
+  onChangeManagerPage = (e) => {
+    const index = e.target.value;
     const items = this.m.getItems();
-    const selectValue =
-      this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
-    items.forEach((item, i) => {
-      if (selectValue === item.itemName) {
-        if (
-          this.v.priceChange.value === '' &&
-          this.v.stockChange.value === ''
-        ) {
-          this.v.priceChange.value = item.price;
-          this.v.stockChange.value = item.stock;
-        }
-        this.m.updatePrices(i, this.v.priceChange.value);
-        this.m.addStock(i, this.v.stockChange.value);
-      }
-    });
-  };
+    
+    this.v.priceChange.disabled = false;
+    this.v.stockChange.disabled = false;
 
-  registerChangeEvent() {
-    this.v.itemNum.addEventListener('change', () => {
-      this.v.priceChange.disabled = false;
-      this.v.stockChange.disabled = false;
-      this.inputManagerPageValue();
-    });
-  }
-  registerSubmitEvent() {
-    this.v.managerPage.addEventListener('submit', (e) => {
-      e.preventDefault();
+    this.v.priceChange.value = items[index].price;
+    this.v.stockChange.value = items[index].stock;
+  };  
 
-      if (this.v.priceChange.value !== '' && this.v.stockChange.value !== '') {
-        this.inputManagerPageValue();
-        this.v.updateItems(this.m.getItems());
-        this.v.initManagerPage();
-        alert('저장 완료');
-      } else {
-        alert('빈칸은 안대용');
-      }
-    });
+  updateManagerPage = (e) => {
+    e.preventDefault();
+    const index = this.v.itemNum.options[this.v.itemNum.selectedIndex].value;
+
+    if (this.v.priceChange.value !== '' && this.v.stockChange.value !== '') {
+      this.m.updatePrices(index, parseInt(this.v.priceChange.value));
+      this.m.addStock(index, parseInt(this.v.stockChange.value));        
+      this.v.updateItems(this.m.getItems());
+      this.v.initManagerPageValue();
+      alert('저장 완료');
+    } else {
+      alert('빈칸은 안대용');
+    }
   }
 }
