@@ -6,6 +6,7 @@ constructor() {
   this.inventoryModal = document.querySelector('#inventoryModal');
   this.inventoryBtn = document.querySelector('#inventoryBtn');
   this.managerBtn = document.querySelector('#managerBtn');
+  this.managerPageModal = document.querySelector('#managerPageModal')
 
   // 자판기 외부
   this.topBody = document.querySelector('.topBody');
@@ -40,8 +41,6 @@ constructor() {
       ${ManagerSelectOption}
     `;
 
-    this.prices = document.querySelectorAll('.price');
-    this.itemStocks = document.querySelectorAll('.itemStock');
   }
   initCoins(userCoins,machineCoins){
     let coinsBoxes = '';
@@ -53,33 +52,31 @@ constructor() {
     });
     this.wallet.innerHTML = coinsBoxes;
     this.machineCoin.innerHTML = machineCoinBoxes;
-
-    this.coinBtns = document.querySelectorAll('.userCoinBtn');
-    this.userCoinCount = document.querySelectorAll('.userCoinCount');
   }
 
     //업데이트
-  updateItems(items){
-    items.forEach((item,i) => {
-      this.prices[i].textContent = `${item.price}`;
-      this.itemStocks[i].textContent = `${item.stock}`;
-    });
+  updateItems(items,index){
+    const prices = document.querySelectorAll('.price');
+    const itemStocks = document.querySelectorAll('.itemStock');
+
+    prices[index].textContent = `${items[index].price}`;
+    itemStocks[index].textContent = `${items[index].stock}`;
   }
 
-  updateCoins(userCoins,machineCoins){
-    let machineCoinBoxes = '';
-    Object.keys(userCoins).forEach((coin,i) => {
-      this.userCoinCount[i].textContent = `${userCoins[coin]}`;
-      machineCoinBoxes += this.renderMachineCoin(machineCoins,coin);
+  updateCoins(userCoins, machineCoins){
+    const userCoinCount = document.querySelectorAll('.userCoinCount');
+    const machineCoinCount = document.querySelectorAll('.machineCoinCount');
+
+    Object.keys(userCoins).forEach((coin,index) => {
+      userCoinCount[index].textContent = `${userCoins[coin]}`;
+      machineCoinCount[index].textContent = `${coin} : ${machineCoins[coin]}`;
     });
-    this.machineCoin.innerHTML = machineCoinBoxes;
   }
 
   updateTotalScreen(total){
     this.totalNum.innerHTML = total;
   }
 
-  // 구매이미지 업데이트
   updateMyItemList(myItemList) {
     let addMyitem = '';
     myItemList.forEach((myItem,i) => {
@@ -116,7 +113,7 @@ constructor() {
   }
   // 자판기 코인
   renderMachineCoin(machineCoins, coin) {
-    return `[ ${coin} : ${machineCoins[coin]} ]`;
+    return `<p class="machineCoinCount">${coin} : ${machineCoins[coin]}</p>`;
   }
   // 추가
   addMytemList(myItem,index) {
@@ -130,12 +127,13 @@ constructor() {
   updateBuyBtn(totalAmount,items) {
     const buyBtns = document.querySelectorAll('.buyBtn');
     const soldOuts = document.querySelectorAll('.soldOut');
+
     items.forEach ((item,i) => {
-      if (totalAmount < item.price) {
-        buyBtns[i].style.backgroundColor= 'rgb(253, 233, 209)';
+      if (totalAmount < item.price && item.stock !== 0) {
+        buyBtns[i].style.backgroundColor = 'rgb(200, 200, 200)';
       } else if(item.stock === 0 ){
         soldOuts[i].style.opacity = '1';
-        buyBtns[i].style.backgroundColor = 'rgb(155, 155, 155)';
+        buyBtns[i].style.backgroundColor = 'rgb(200, 200, 200)';
       } else {
         soldOuts[i].style.opacity = '0';
         buyBtns[i].style.backgroundColor = 'rgb(60, 244, 192)';
@@ -152,18 +150,18 @@ constructor() {
     this.dropItem.style.display = 'none';
   }
 
-
-
   removeMyItem(index) {
     this.myItemList[index].remove();
   }
 
   // 관리자 (초기화)
   initManagerPageValue(){
-    this.managerPage.style.visibility = 'hidden';
+    this.managerPageModal.close();
     this.itemNum.value = 'default';
     this.priceChange.value = '';
     this.stockChange.value = '';
+    this.priceChange.disabled = true;
+    this.stockChange.disabled = true;
   }
 
   // 모달
@@ -173,15 +171,6 @@ constructor() {
         Modal.close();
       } else {
         Modal.show();
-      }
-    })
-  }
-  onClickManagerPageBtn() {
-    this.managerBtn.addEventListener('click',() => {
-      if (this.managerPage.style.visibility === 'visible'){
-        this.managerPage.style.visibility = 'hidden';
-      } else {
-        this.managerPage.style.visibility = 'visible';                
       }
     })
   }

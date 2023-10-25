@@ -3,7 +3,7 @@ const data = {
 
   'userCoinCount': { '1': 10, '5': 10, '10': 10, '50': 10, '100': 10 },
 
-  'machineCoinCount': { '1': 15, '5': 14, '10': 13, '50': 12, '100': 11 },
+  'machineCoinCount': { '1': 10, '5': 10, '10': 10, '50': 10, '100': 10 },
 
   'items': [
     { itemName: "여주", price: 155, stock: 10, image: "/img/img11.png"},

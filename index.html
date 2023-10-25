@@ -21,20 +21,21 @@
 
 
     <div id="main">
+      <dialog id="managerPageModal">
+        <form method="dialog" name="managerPage" id="managerPage" method="POST" action="/src/view.js">
+          <label for="itemNum">아이템</label>
+          <select name="itemNum" class="managerInput" id="itemNum"></select>
+  
+          <label for="stockChange">재고</label>
+          <input disabled type="number" name="stockChange" id="stockChange" class="managerInput" min="0" max="20" >
+  
+          <label for="priceChange">가격</label>
+          <input disabled type="number" name="priceChange" id="priceChange" class="managerInput" min="1"  max="2000" >
+          
+          <input type="submit" id="saveItem" value="저장" />
+        </form>
+      </dialog>
       
-      <form name="managerPage" id="managerPage" method="POST" action="/src/view.js">
-        <label for="itemNum">아이템</label>
-        <select name="itemNum" class="managerInput" id="itemNum"></select>
-
-        <label for="stockChange">재고</label>
-        <input disabled type="number" name="stockChange" id="stockChange" class="managerInput" min="0" max="20" >
-
-        <label for="priceChange">가격</label>
-        <input disabled type="number" name="priceChange" id="priceChange" class="managerInput" min="1"  max="2000" >
-
-        <input type="submit" id="saveItem" value="저장" />
-      </form>
-
       <!-- 자판기 본체 -->
       <div class="vendingBody">
         <!-- 본체 상단 -->

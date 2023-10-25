@@ -5,25 +5,21 @@ export default class Model extends LocalStorage {
     super();
   }
 
-
-  // 토탈화면
   addTotalAmount(coin){
     return this.saveData('totalAmount', this.getTotalAmount() + coin);
   }
 
   removeTotalAmount(amount){
-    //금액은 컨트롤러에서
     return this.saveData('totalAmount', this.getTotalAmount() - amount);
   }
 
-  // 자판기 코인
   addMachineCoins(coin){
     const machineCoin = this.getMachineCoinCount();
     machineCoin[coin] += 1;
 
     return this.saveData('machineCoinCount', machineCoin);
   }
-  // 자판기 코인은 여러개 빠질 수 있으므로 conut 사용
+
   removeMachineCoins(coin ,count){
     const machineCoin = this.getMachineCoinCount();
     machineCoin[coin] -= count;
@@ -31,12 +27,12 @@ export default class Model extends LocalStorage {
     return this.saveData('machineCoinCount', machineCoin);
   }
 
-  // 유저 코인
   addUserCoins(coin ,count){
     const userCoin = this.getUserCoinCount();
     userCoin[coin] += count;
     return this.saveData('userCoinCount', userCoin);
   }
+
   removeUserCoins(coin){
     const userCoin = this.getUserCoinCount();
     userCoin[coin] -= 1;
@@ -53,7 +49,6 @@ export default class Model extends LocalStorage {
     return this.saveData('items',items);
   }
 
-  // 재고
   addStock(itemIndex, count) {
     const item = this.getItem(itemIndex);
     item.stock = count;
@@ -65,14 +60,12 @@ export default class Model extends LocalStorage {
     return this.setItem(item, itemIndex);
   }
 
-  // 아이템 가격
   updatePrices(itemIndex, priceChange) {
     const item = this.getItem(itemIndex);
     item.price = priceChange;
     return this.setItem(item, itemIndex);
   }
 
-  // 구매한 아이템
   addMyItem(itemIndex){
     const myitemList = this.getMyItemList();
     const item = this.getItem(itemIndex);

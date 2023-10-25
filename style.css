@@ -136,10 +136,6 @@ h2 {
     border-radius: 10px;
     border: 3px solid black;
     box-sizing: border-box;
-    background-color: rgb(253, 233, 209);
-}
-.buyBtn:hover {
-    background-color: rgb(210, 185, 154);
 }
 
 /* 자판기 하단 */
@@ -161,14 +157,20 @@ h2 {
     width: 400px;
     height: 30px;
     margin: auto;
-    font-size: 18px;
-    line-height: 30px;
-    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
     margin-bottom: 20px;
     border-radius: 5px;
     border: 3px solid black;
     box-sizing: border-box;
-    background-color: #ffffff;
+    background-color: rgb(58, 58, 58);
+}
+.machineCoinCount {
+    color: #ffb134;
+    text-align: center;
+    font-size: 18px;
+    line-height: 30px;
+    display: inline;
 }
 
 .totalScreen {
@@ -318,37 +320,38 @@ h2 {
 }
 
 #managerPage {
-    width: 350px;
-    height: 500px;
-    font-size: 18px;
+    height: 100%;
+    font-size: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    position: absolute;
-    right: 10px;
-    top: 10px;
+    justify-content:center;
+    padding: 0 30px;
+}
+#managerPageModal {
+    width: 350px;
+    height: 500px;
     z-index: 990;
-    padding: 25px;
+    position: absolute;
+    left: 450px;
+    top: 10px;
     border-radius: 10px;
     border: 5px solid #000;
     box-sizing: border-box;
-    background-color: #f8e1d677;
+    background-color: #f8e1d6b9;
     backdrop-filter: blur(5px);
-    visibility: hidden;
 }
 .managerInput{
     height: 35px;
-    margin-bottom: 20px;
-    line-height: 30px;
     padding: 0 10px; 
-    font-size: 18px;
+    margin-bottom: 50px;
+    font-size: 20px;
     border-radius: 5px;
     border: 2px solid #000;
     box-sizing: border-box;
 }
 
 #saveItem {
-    height: 30px;
+    height: 40px;
     margin-top: 10px;
     font-size: 18px;
     border-radius: 5px;
