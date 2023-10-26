@@ -14,35 +14,29 @@ export default class Model extends LocalStorage {
   }
 
   addMachineCoins(coin){
-    const machineCoin = this.getMachineCoinCount();
-    machineCoin[coin] += 1;
+    const machineCoins = this.getMachineCoinCount();
+    machineCoins[coin] += 1;
 
-    return this.saveData('machineCoinCount', machineCoin);
-  }
-
-  removeMachineCoins(coin ,count){
-    const machineCoin = this.getMachineCoinCount();
-    machineCoin[coin] -= count;
-    
-    return this.saveData('machineCoinCount', machineCoin);
-  }
-
-  addUserCoins(coin ,count){
-    const userCoin = this.getUserCoinCount();
-    userCoin[coin] += count;
-    return this.saveData('userCoinCount', userCoin);
+    return this.saveData('machineCoinCount', machineCoins);
   }
 
   removeUserCoins(coin){
-    const userCoin = this.getUserCoinCount();
-    userCoin[coin] -= 1;
-    return this.saveData('userCoinCount', userCoin);
+    const userCoins = this.getUserCoinCount();
+    userCoins[coin] -= 1;
+    return this.saveData('userCoinCount', userCoins);
+  }
+
+  addSpareCoins(coin){
+    const spareCoins = this.getSpareCoins();
+    spareCoins[coin] += 1;
+    return this.saveData('spareCoins', spareCoins);
   }
 
   getItem(index){
     const items = this.getItems();
     return items[index];
   }
+
   setItem(item,index){
     const items = this.getItems();
     items[index] = item;
@@ -78,6 +72,20 @@ export default class Model extends LocalStorage {
     return this.saveData('myItemList', myitemList);
   }
 
+  //set
+  setUserCoins(userCoins) {
+    return this.saveData('userCoinCount', userCoins);
+  }
+  setMachinCoins(machineCoins) {
+    return this.saveData('machineCoinCount', machineCoins);
+  }
+  setSpareCoins(spareCoins){
+    return this.saveData('spareCoins', spareCoins);
+  }
+  setTotalAmount(totalAmount) {
+    return this.saveData('totalAmount', totalAmount);
+  }
+
   // get
   getTotalAmount() {
     return this.readData('totalAmount');
@@ -97,5 +105,9 @@ export default class Model extends LocalStorage {
 
   getMyItemList() {
     return this.readData('myItemList');
+  }
+
+  getSpareCoins() {
+    return this.readData('spareCoins');
   }
 }

@@ -16,7 +16,9 @@ const data = {
     { itemName: "죽순", price: 500, stock: 10, image: "/img/img16.png"}
   ],
 
-  'myItemList': []
+  'myItemList': [],
+
+  'spareCoins': { '1': 0, '5': 0, '10': 0, '50': 0, '100': 0 }
 }
 
 export default data;

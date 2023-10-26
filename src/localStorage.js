@@ -11,6 +11,7 @@ export default class LocalStorage {
     this.checkData('machineCoinCount');
     this.checkData('items');
     this.checkData('myItemList');
+    this.checkData('spareCoins');
   }
 
   checkData(key){
