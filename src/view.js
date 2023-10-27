@@ -139,7 +139,7 @@ export default class View {
 
   // 관리자 (초기화)
   initManagerPageValue(priceChange, stockChange) {
-    this.managerPageModal.close();
+    document.querySelector("#managerPageModal").close();
     this.itemNum.value = 'default';
     priceChange.value = '';
     stockChange.value = '';
