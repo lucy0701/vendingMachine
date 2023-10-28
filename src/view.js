@@ -83,6 +83,7 @@ export default class View {
       </div>
     `;
   }
+  
   // 관리자
   renderManagerSelectOption(item, index) {
     return `<option name='itemNum'>${item.itemName}</option>`;

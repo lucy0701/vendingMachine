@@ -161,6 +161,7 @@ export default class Controller {
     priceChange.value = item.price;
   };
 
+
   managerPageForm = (e) => {
     e.preventDefault();
     const index = this.v.itemNum.selectedIndex - 1;
@@ -179,5 +180,4 @@ export default class Controller {
     }
     this.v.updateBuyBtn(this.m.getTotalAmount(), this.m.getItems());
   };
-  
 }
