@@ -15,6 +15,7 @@ export default class Controller {
     const myItemList = this.m.getMyItemList();
 
     this.v.initItems(items);
+
     this.v.initCoins(userCoins, machineCoins);
     this.v.updateTotalScreen(totalAmount);
     this.v.updateMyItemList(myItemList);
