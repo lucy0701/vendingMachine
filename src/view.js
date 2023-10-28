@@ -14,16 +14,10 @@ export default class View {
   // 렌더링
   initItems(items) {
     let itemBoxes = '';
-    let ManagerSelectOption = '';
     items.forEach((item, i) => {
       itemBoxes += this.renderItem(item, i);
-      ManagerSelectOption += this.renderManagerSelectOption(item, i);
     });
     this.topBody.innerHTML = itemBoxes;
-    this.itemNum.innerHTML = `
-      <option disabled selected value="default">아이템 선택</option>
-      ${ManagerSelectOption}
-    `;
   }
   initCoins(userCoins, machineCoins) {
     let coinsBoxes = '';
@@ -35,6 +29,19 @@ export default class View {
     });
     this.wallet.innerHTML = coinsBoxes;
     document.querySelector('.machineCoin').innerHTML = machineCoinBoxes;
+  }
+  initManagerPage() {
+    this.topBody.innerHTML = renderManagerPage();
+  }
+  initItemsSelectOption(items) {
+    let managerSelectOption = '';
+    items.forEach((item, i) => {
+      managerSelectOption += this.renderManagerSelectOption(item, i);
+    });
+    this.itemNum.innerHTML = `
+      <option disabled selected value="default">아이템 선택</option>
+      ${managerSelectOption}
+    `;
   }
 
   //업데이트
@@ -84,6 +91,24 @@ export default class View {
     `;
   }
   
+
+  renderManagerPage() {
+    return `
+      <form name="managerPage" id="managerPage" method="POST" action="/src/view.js">
+        <label for="itemNum">아이템</label>
+        <select name="itemNum" class="managerInput" id="itemNum"></select>
+    
+        <label for="stockChange">재고</label>
+        <input disabled type="number" name="stockChange" id="stockChange" class="managerInput" min="0" max="20" >
+    
+        <label for="priceChange">가격</label>
+        <input disabled type="number" name="priceChange" id="priceChange" class="managerInput" min="1"  max="2000" >
+        
+        <input type="submit" id="saveItem" value="저장" />
+      </form>
+    `
+  }
+
   // 관리자
   renderManagerSelectOption(item, index) {
     return `<option name='itemNum'>${item.itemName}</option>`;
