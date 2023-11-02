@@ -18,57 +18,61 @@ export default class Controller {
     this.v.initCoins(userCoins, machineCoins);
     this.v.updateTotalScreen(totalAmount);
     this.v.updateMyItemList(myItemList);
-
     this.v.updateBuyBtn(totalAmount, items);
-
-    this.v.onClickModalBtn(
-      document.querySelector('#walletBtn'),
-      document.querySelector('#walletModal'),
-    );
-    this.v.onClickModalBtn(
-      document.querySelector('#inventoryBtn'),
-      document.querySelector('#inventoryModal'),
-    );
-    this.v.onClickModalBtn(
-      document.querySelector('#managerBtn'),
-      document.querySelector('#managerPageModal'),
-    );
   }
 
   initEventHandlers() {
     this.v.topBody.addEventListener('click', this.onClickPurchase);
     this.v.wallet.addEventListener('click', this.onClickCoinBtns);
-    this.v.inventory.addEventListener('click', this.onClickDeleteMyItem);
     document
       .querySelector('.returnCoin')
       .addEventListener('click', this.onClickReturnCoins);
-    this.v.dropItem.addEventListener('click', this.onClickMyItem);
+    this.v.dropItem.addEventListener('click', this.onClickGetMyItem);
 
-    this.v.itemNum.addEventListener('change', this.onChangeManagerPage);
-    this.v.managerPage.addEventListener('submit', this.managerPageForm);
+    this.v.selectItem.addEventListener('change', this.onChangeItemSelector);
+
+    // TODO
+    // on + Eventname + itemSelector
+    // onChangeItemSelector
+    this.v.managerForm.addEventListener('submit', this.onSubmitManagerForm);
+    this.v.managerForm.addEventListener('change', this.onChangeInput);
+
+    document
+      .querySelector('.myItemDelete-01')
+      .addEventListener('click', this.onClickDeleteMyItemBtn);
+    document
+      .querySelector('.myItemDelete-02')
+      .addEventListener('click', this.onCheckMyItemDelete);
   }
 
   onClickCoinBtns = (e) => {
-    const index = e.target.dataset.index;
+    const index = e.target.dataset.userIndex;
     const totalAmount = this.m.getTotalAmount();
     const userCoins = this.m.getUserCoinCount();
     const coin = Object.keys(userCoins)[index];
 
-    if (userCoins[coin] > 0 && totalAmount < 10000) {
+    // TODO
+    // if (Number(coin) + totalAmount < 10000)
+
+    if (userCoins[coin] > 0 && Number(coin) + totalAmount <= 10000) {
       this.v.updateCoins(
         this.m.removeUserCoins(coin),
         this.m.getMachineCoinCount(),
       );
-      this.m.addSpareCoins(coin);
-      this.v.updateTotalScreen(this.m.addTotalAmount(parseInt(coin)));
+      this.m.addInsultCoins(coin);
+      this.v.updateTotalScreen(this.m.addTotalAmount(Number(coin)));
+      this.v.updateBuyBtn(this.m.getTotalAmount(), this.m.getItems());
     } else if (totalAmount >= 10000) {
-      alert('최대 금액을 넘었습니다!');
+      // TODO
+      this.v.updateTotalScreen('최대 금액 초과');
+      setTimeout(() => {
+        this.v.updateTotalScreen(this.m.getTotalAmount());
+      }, 1000);
     }
-    this.v.updateBuyBtn(this.m.getTotalAmount(), this.m.getItems());
   };
 
   onClickPurchase = (e) => {
-    const index = e.target.dataset.index;
+    const index = e.target.dataset.itemIndex;
     const totalAmount = this.m.getTotalAmount();
     const item = this.m.getItems()[index];
 
@@ -78,106 +82,132 @@ export default class Controller {
         this.v.updateTotalScreen(this.m.removeTotalAmount(item.price));
         this.v.updateItems(this.m.removeStock(index), index);
         this.v.showDropItemDisplay(item);
-      } else if (item.stock === 0) {
-        alert('늦었어..사랑은 타이밍이야');
-      } else if (totalAmount < item.price) {
-        alert('이 사람을 가지기엔 넌 부족해');
+        this.m.setIsPurchased(true);
       }
     }
     this.v.updateBuyBtn(this.m.getTotalAmount(), this.m.getItems());
   };
 
-  onClickMyItem = () => {
+  onClickGetMyItem = () => {
     this.v.hideDropItemDisplay();
     this.v.updateMyItemList(this.m.getMyItemList());
   };
 
-  onClickDeleteMyItem = (e) => {
-    const index = e.target.dataset.index;
-
-    if (index !== undefined) {
-      const deleteChcek = confirm('헤어질꺼양? 환불 안해줄껀데도?');
-      if (deleteChcek) {
-        this.v.removeMyItem(index);
+  onClickDeleteMyItemBtn = () => {
+    const itemCheckBoxse = document.querySelectorAll('.itemCheckBox');
+    itemCheckBoxse.forEach((itemCheckBox) => {
+      if (itemCheckBox.style.display = 'none') {
+        itemCheckBox.style.display = 'block';
       }
-    }
+    });
+    document.querySelector('.myItemDelete-01').style.display = 'none';
+    document.querySelector('.myItemDelete-02').style.display = 'block';
+  };
+
+  onCheckMyItemDelete = () => {
+    const itemCheckBoxse = document.querySelectorAll('.itemCheckBox');
+    itemCheckBoxse.forEach((itemCheckBox, index) => {
+      if (itemCheckBox.checked) {
+        this.v.removeMyItem(index);
+        this.m.deleteMyItem(index);
+      }
+      itemCheckBox.style.display = 'none';
+      document.querySelector('.myItemDelete-01').style.display = 'block';
+      document.querySelector('.myItemDelete-02').style.display = 'none';
+    });
   };
 
   onClickReturnCoins = () => {
     const userCoins = this.m.getUserCoinCount();
     const machineCoins = this.m.getMachineCoinCount();
-    const spareCoins = this.m.getSpareCoins();
+    const insultCoins = this.m.getInsultCoins();
     const coins = Object.keys(userCoins);
-    let totalAmount =this.m.getTotalAmount();
+    let totalAmount = this.m.getTotalAmount();
     let count = 0;
 
-    const returnCoincalculate = (insertCoin) => {
-      for(let i = coins.length-1; i >= 0; i--) {
-        if (insertCoin[coins[i]] === 0 ){
-          continue;
+    if (this.m.getIsPurchased() === true) {
+      let insultCount = 0;
+
+      [...coins].reverse().forEach((coin) => {
+        count = parseInt(totalAmount / coin,10);
+        if (machineCoins[coin] >= 0 && machineCoins[coin] >= count) {
+          insultCount = insultCoins[coin];
+          insultCoins[coin] -= insultCount;
+          userCoins[coin] += count;
+          machineCoins[coin] += insultCount - count;
+          count *= coin;
+          totalAmount -= count;
         }
-        count = parseInt(totalAmount / coins[i]);
-        userCoins[coins[i]] += count;
-        insertCoin[coins[i]] -= count;
-        count *= coins[i];
-        totalAmount -= count;
-      }
+      });
+      this.m.setIsPurchased(false);
+
+    } else {
+      [...coins].reverse().forEach((coin) => {
+        if (insultCoins[coin] !== 0) {
+          count = parseInt(totalAmount / coin,10);
+          userCoins[coin] += count;
+          insultCoins[coin] -= count;
+          count *= coin;
+          totalAmount -= count;
+        }
+      });
     }
-
-    returnCoincalculate(spareCoins);
-
-    if(totalAmount > 0) {
-      returnCoincalculate(machineCoins);
-    }
-
-    coins.forEach(coin => {
-      count = spareCoins[coin];
-      spareCoins[coin] -= count;
-      machineCoins[coin] += count;
-    })
 
     this.m.setTotalAmount(totalAmount);
     this.m.setUserCoins(userCoins);
     this.m.setMachinCoins(machineCoins);
-    this.m.setSpareCoins(spareCoins);
+    this.m.setInsultCoins(insultCoins);
     this.v.updateCoins(userCoins, machineCoins);
     this.v.updateTotalScreen(totalAmount);
     this.v.updateBuyBtn(totalAmount, this.m.getItems());
   };
 
-
-  onChangeManagerPage = () => {
-
-    const index = this.v.itemNum.selectedIndex - 1;
+  onChangeItemSelector = () => {
+    const index = this.v.selectItem.selectedIndex - 1;
     const item = this.m.getItems()[index];
 
-    const stockChange = this.v.managerPage.querySelector('#stockChange');
-    const priceChange = this.v.managerPage.querySelector('#priceChange');
+    const stockChange = this.v.managerForm.querySelector('#stockChange');
+    const priceChange = this.v.managerForm.querySelector('#priceChange');
+    const formSubmitBtn = this.v.managerForm.querySelector('#formSubmitBtn');
 
+    formSubmitBtn.disabled = false;
     priceChange.disabled = false;
     stockChange.disabled = false;
 
     stockChange.value = item.stock;
     priceChange.value = item.price;
+
   };
 
-
-  managerPageForm = (e) => {
+  onSubmitManagerForm = (e) => {
     e.preventDefault();
-    const index = this.v.itemNum.selectedIndex - 1;
-    const priceChange = this.v.managerPage.querySelector('#priceChange');
-    const stockChange = this.v.managerPage.querySelector('#stockChange');
+    const index = this.v.selectItem.selectedIndex - 1;
+    const priceChange = this.v.managerForm.querySelector('#priceChange');
+    const stockChange = this.v.managerForm.querySelector('#stockChange');
+    const formSubmitBtn = this.v.managerForm.querySelector('#formSubmitBtn');
 
-    if (stockChange !== '' && priceChange !== '') {
-      this.m.updatePrices(index, parseInt(priceChange.value));
-      this.m.addStock(index, parseInt(stockChange.value));
+    if (stockChange.value !== '' && priceChange.value !== '') {
+      this.m.updatePrices(index, Number(priceChange.value));
+      this.m.addStock(index, Number(stockChange.value));
       this.v.updateItems(this.m.getItems(), index);
-      this.v.initManagerPageValue(priceChange, stockChange);
-
-      alert('저장 완료');
-    } else {
-      alert('빈칸은 안대용');
-    }
-    this.v.updateBuyBtn(this.m.getTotalAmount(), this.m.getItems());
+      this.v.initManagerinputValue(priceChange, stockChange, formSubmitBtn);
+      this.v.updateBuyBtn(this.m.getTotalAmount(), this.m.getItems());
+    } 
   };
+
+  onChangeInput = (e) => {
+    const priceChange = this.v.managerForm.querySelector('#priceChange');
+    const stockChange = this.v.managerForm.querySelector('#stockChange');
+
+    if (stockChange.value === '') {
+      this.v.onFocusInfut(stockChange,stockChange.dataset.inputIndex);
+    } else {
+      this.v.offFocusInfut(stockChange,stockChange.dataset.inputIndex);
+    }
+    if(priceChange.value === '') {
+      this.v.onFocusInfut(priceChange,priceChange.dataset.inputIndex);
+    } else {
+      this.v.offFocusInfut(priceChange,priceChange.dataset.inputIndex);
+    }
+  }
 }

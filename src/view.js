@@ -7,8 +7,29 @@ export default class View {
     this.inventory = document.querySelector('#inventory');
 
     // 관리자
-    this.itemNum = document.querySelector('#itemNum');
-    this.managerPage = document.querySelector('#managerPage');
+    this.selectItem = document.querySelector('#selectItem');
+    this.managerForm = document.querySelector('#managerForm');
+
+    this.modalEventHandlers();
+  }
+
+  modalEventHandlers() {
+    this.onClickModalBtn(
+      document.querySelector('#walletBtn'),
+      document.querySelector('#walletModal'),
+    );
+    this.onClickModalBtn(
+      document.querySelector('#inventoryBtn'),
+      document.querySelector('#inventoryModal'),
+    );
+    this.onClickModalBtn(
+      document.querySelector('#managerBtn'),
+      document.querySelector('#managerFormModal'),
+    );
+    this.onClickModalBtn(
+      document.querySelector('.managerFormClose'),
+      document.querySelector('#managerFormModal'),
+    );
   }
 
   // 렌더링
@@ -20,7 +41,7 @@ export default class View {
       ManagerSelectOption += this.renderManagerSelectOption(item, i);
     });
     this.topBody.innerHTML = itemBoxes;
-    this.itemNum.innerHTML = `
+    this.selectItem.innerHTML = `
       <option disabled selected value="default">아이템 선택</option>
       ${ManagerSelectOption}
     `;
@@ -66,7 +87,6 @@ export default class View {
       addMyitem += this.addMytemList(myItem, i);
     });
     this.inventory.innerHTML = addMyitem;
-    this.myItemList = document.querySelectorAll('.myItem');
   }
 
   // 아이템
@@ -79,30 +99,33 @@ export default class View {
           <div class="itemStock">${item.stock}</div>
           <img class="itemImgPrint" src=${item.image} />
         </div>
-        <button class="buyBtn" data-index="${index}" >고백 박기</button>   
+        <button class="buyBtn" data-item-index="${index}" disabled >고백 박기</button>   
       </div>
     `;
   }
-  
+
   // 관리자
-  renderManagerSelectOption(item, index) {
-    return `<option name='itemNum'>${item.itemName}</option>`;
+  renderManagerSelectOption(item) {
+    return `<option name='selectItem'>${item.itemName}</option>`;
   }
   // 유저 코인
   renderUserCoin(userCoins, coin, index) {
     return `
-      <button class="userCoinBtn" data-index="${index}" value=${coin}>${coin}</button>
+      <button class="userCoinBtn" data-user-index="${index}" value=${coin}>${coin}</button>
       <p class="userCoinCount">${userCoins[coin]}</p>
     `;
   }
   // 자판기 코인
   renderMachineCoin(machineCoins, coin) {
-    return `<p class="machineCoinCount">${coin} : ${machineCoins[coin]}</p>`;
+    return `<p class="machineCoinCount">${coin} : ${machineCoins[coin]} </p>`;
   }
   // 추가
   addMytemList(myItem, index) {
     return `
-      <img class='myItem' data-index="${index}" src=${myItem} />
+    <div class='myItemBox'>
+      <input type="checkbox" name='checkbox' data-myitem-checkbox-index="${index}" class='itemCheckBox'/>
+      <img class='myItemImg' data-myitem-index="${index}" src=${myItem} />
+    </div>
     `;
   }
 
@@ -113,14 +136,17 @@ export default class View {
     const soldOuts = document.querySelectorAll('.soldOut');
 
     items.forEach((item, i) => {
-      if (totalAmount < item.price && item.stock !== 0) {
-        buyBtns[i].style.backgroundColor = 'rgb(200, 200, 200)';
+      if (totalAmount < item.price) {
+        buyBtns[i].style.backgroundColor = '';
+        buyBtns[i].disabled = true;
       } else if (item.stock === 0) {
-        soldOuts[i].style.opacity = '1';
-        buyBtns[i].style.backgroundColor = 'rgb(200, 200, 200)';
+        buyBtns[i].style.backgroundColor = '';
+        soldOuts[i].style.display = 'block';
+        buyBtns[i].disabled = true;
       } else {
-        soldOuts[i].style.opacity = '0';
+        soldOuts[i].style.display = 'none';
         buyBtns[i].style.backgroundColor = 'rgb(60, 244, 192)';
+        buyBtns[i].disabled = false;
       }
     });
   }
@@ -135,20 +161,34 @@ export default class View {
   }
 
   removeMyItem(index) {
-    this.myItemList[index].remove();
+    const myItemBox = document.querySelectorAll('.myItemBox');
+    myItemBox[index].remove();
   }
 
   // 관리자 (초기화)
-  initManagerPageValue(priceChange, stockChange) {
-    document.querySelector("#managerPageModal").close();
-    this.itemNum.value = 'default';
+  initManagerinputValue(priceChange, stockChange, formSubmitBtn) {
+    document.querySelector('#managerFormModal').close();
+    this.selectItem.value = 'default';
     priceChange.value = '';
     stockChange.value = '';
     priceChange.disabled = true;
     stockChange.disabled = true;
+    formSubmitBtn.disabled = true;
   }
 
-  // 모달
+  //포커스
+  onFocusInfut = (inputChange, index) => {
+    const inputInfoText = document.querySelectorAll('.inputInfoText');
+    inputChange.style.borderColor = 'red';
+    inputInfoText[index].innerHTML = '빈칸을 채워주세요';
+  };
+  offFocusInfut = (inputChange, index) => {
+    const inputInfoText = document.querySelectorAll('.inputInfoText');
+    inputChange.style.borderColor = '';
+    inputInfoText[index].innerHTML = '';
+  };
+
+  // 모달 (쇼, 클로즈 따로 만들어도 됨)
   onClickModalBtn(btn, Modal) {
     btn.addEventListener('click', () => {
       if (Modal.open) {

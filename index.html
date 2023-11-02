@@ -19,20 +19,24 @@
       </button>
     </header>
 
-
     <div id="main">
-      <dialog id="managerPageModal">
-        <form method="dialog" name="managerPage" id="managerPage" method="POST" action="/src/view.js">
-          <label for="itemNum">아이템</label>
-          <select name="itemNum" class="managerInput" id="itemNum"></select>
+      <dialog id="managerFormModal">
+        <button class="managerFormClose">X</button>
+        <form method="dialog" name="managerForm" id="managerForm" method="POST" action="/src/view.js">
+
+          <select name="selectItem" class="selectInput" id="selectItem"></select>
+
+          <label for="stockChange">재고
+          <input disabled type="number" name="stockChange" id="stockChange" class="managerInput" min="0" max="20" data-input-index="0">
+          <p class="inputInfoText"></p>
+        </label>
   
-          <label for="stockChange">재고</label>
-          <input disabled type="number" name="stockChange" id="stockChange" class="managerInput" min="0" max="20" >
-  
-          <label for="priceChange">가격</label>
-          <input disabled type="number" name="priceChange" id="priceChange" class="managerInput" min="1"  max="2000" >
+          <label for="priceChange">가격
+          <input disabled type="number" name="priceChange" id="priceChange" class="managerInput" min="1"  max="2000" data-input-index="1">
+          <p class="inputInfoText"></p>
+        </label>
           
-          <input type="submit" id="saveItem" value="저장" />
+          <input type="submit" id="formSubmitBtn" value="저장" disabled />
         </form>
       </dialog>
       
@@ -47,9 +51,9 @@
           <!-- 하단 왼쪽 -->
           <div class="bottomBodyLeft">
             <div class="machineCoin"></div>
-            <div class="totalScreen">
-              <span class = "totalNum"></span>
-            </div>
+              <div class="totalScreen">
+                <span class = "totalNum"></span>
+              </div>
             <div class="getItem">
               <img class="dropItem"></img>
             </div>
@@ -73,7 +77,9 @@
     <footer id="footer">
       <!-- 인벤토리 팝업 -->
       <dialog id="inventoryModal" >
-        <div id="inventory"></div>
+          <div id="inventory"></div>
+          <button class='myItemDeleteBtn myItemDelete-01'> 삭제하기 </button>
+          <button class='myItemDeleteBtn myItemDelete-02'> 삭제 </button>
       </dialog>
       
       <!-- 인벤토리 팝업 버튼 -->

@@ -26,10 +26,10 @@ export default class Model extends LocalStorage {
     return this.saveData('userCoinCount', userCoins);
   }
 
-  addSpareCoins(coin){
-    const spareCoins = this.getSpareCoins();
-    spareCoins[coin] += 1;
-    return this.saveData('spareCoins', spareCoins);
+  addInsultCoins(coin){
+    const insultCoins = this.getInsultCoins();
+    insultCoins[coin] += 1;
+    return this.saveData('insultCoins', insultCoins);
   }
 
   getItem(index){
@@ -79,11 +79,14 @@ export default class Model extends LocalStorage {
   setMachinCoins(machineCoins) {
     return this.saveData('machineCoinCount', machineCoins);
   }
-  setSpareCoins(spareCoins){
-    return this.saveData('spareCoins', spareCoins);
+  setInsultCoins(insultCoins){
+    return this.saveData('insultCoins', insultCoins);
   }
   setTotalAmount(totalAmount) {
     return this.saveData('totalAmount', totalAmount);
+  }
+  setIsPurchased(isPurchased){
+    return this.saveData('isPurchased',isPurchased)
   }
 
   // get
@@ -107,7 +110,11 @@ export default class Model extends LocalStorage {
     return this.readData('myItemList');
   }
 
-  getSpareCoins() {
-    return this.readData('spareCoins');
+  getInsultCoins() {
+    return this.readData('insultCoins');
+  }
+
+  getIsPurchased(){
+    return this.readData('isPurchased');
   }
 }

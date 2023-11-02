@@ -18,7 +18,9 @@ const data = {
 
   'myItemList': [],
 
-  'spareCoins': { '1': 0, '5': 0, '10': 0, '50': 0, '100': 0 }
+  'insultCoins': { '1': 0, '5': 0, '10': 0, '50': 0, '100': 0 },
+
+  'isPurchased': 'false'
 }
 
 export default data;
