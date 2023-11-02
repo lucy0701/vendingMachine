@@ -78,11 +78,11 @@ export default class Controller {
 
     if (index !== undefined) {
       if (totalAmount >= item.price && 0 < item.stock) {
+        this.m.setIsPurchased(true);
         this.m.addMyItem(index);
         this.v.updateTotalScreen(this.m.removeTotalAmount(item.price));
         this.v.updateItems(this.m.removeStock(index), index);
         this.v.showDropItemDisplay(item);
-        this.m.setIsPurchased(true);
       }
     }
     this.v.updateBuyBtn(this.m.getTotalAmount(), this.m.getItems());
@@ -112,9 +112,9 @@ export default class Controller {
         this.m.deleteMyItem(index);
       }
       itemCheckBox.style.display = 'none';
-      document.querySelector('.myItemDelete-01').style.display = 'block';
-      document.querySelector('.myItemDelete-02').style.display = 'none';
     });
+    document.querySelector('.myItemDelete-01').style.display = 'block';
+    document.querySelector('.myItemDelete-02').style.display = 'none';
   };
 
   onClickReturnCoins = () => {

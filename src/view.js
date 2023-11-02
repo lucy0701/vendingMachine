@@ -190,7 +190,8 @@ export default class View {
 
   // 모달 (쇼, 클로즈 따로 만들어도 됨)
   onClickModalBtn(btn, Modal) {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      console.log(e.currentTarget)
       if (Modal.open) {
         Modal.close();
       } else {
