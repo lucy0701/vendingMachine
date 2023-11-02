@@ -305,6 +305,9 @@ h2 {
 .userCoin:hover {
     background-color: rgb(255, 221, 158);
 }
+.userCoinCount{
+    font-size: 20px;
+}
 
 /* 관리자 */
 #managerBtn {
@@ -416,22 +419,7 @@ h2 {
     background-color: rgba(222, 255, 244, 0.464);
     backdrop-filter: blur(5px);
 }
-.inventoryBox{
-    width: 150px;
-    height: 600px;
-    text-align: center;
-    border-radius: 20px;
-    border: 4px solid black;
-    box-sizing: border-box;
-    position: absolute;
-    padding-top: 10px;
-    top: -660px;
-    left: 0px;
-    z-index: 100;
-    overflow: auto;
-    backdrop-filter: blur(5px);
-    background-color: rgba(255, 244, 244, 0.415);
-}
+
 #inventory {
     width: 150px;
     height: 600px;
@@ -509,7 +497,32 @@ h2 {
     #inventory {
         width: 90px;
         height: 280px;
+        top: -320px;
         border: 3px solid black;
+    }
+
+    .myItemBox{
+        position: relative;
+        width: 90px;
+        height: 90px;
+        margin: auto;
+        margin-bottom: -35px;
+    }
+    .myItemDeleteBtn {
+        width: 70px;
+        height: 30px;
+        font-size: 15px;
+        line-height: 26px;
+        position: absolute;
+        bottom: 50px;
+        left: 10px;
+        z-index: 200;
+        border: 2px solid black;
+    }
+    .itemCheckBox{
+        width: 15px;
+        height: 15px;
+        right: 15px;
     }
     
     /* 자판기 본체 */
@@ -592,12 +605,15 @@ h2 {
         border-radius: 5px;
         border: 2px solid black;
     }
-    .notice{
-        width: 100%;
-        height: 40px;
-        background-color: #000;
 
+    .machineCoinCount {
+        color: #ffb134;
+        text-align: center;
+        font-size: 10px;
+        line-height: 20px;
+        display: inline;
     }
+
     .totalScreen {
         width: 50%;
         height: 40px;
@@ -627,7 +643,7 @@ h2 {
     #footer {
         padding: 0 5px;
         border-radius: 10px;
-        border: 2px solid black;
+        border: 3px solid black;
     }
     
     .footerBtn{
@@ -651,22 +667,18 @@ h2 {
         height: 50px;
         position: absolute;
         left: 53px;
-        z-index: 30;
     }
     
     /* 코인 커스텀 */
-    .coinsBox {
-        padding: 2px;
-        font-size: 10px;
-        border-radius: 10px;
-        border: 2px solid black;
-    }
-    .userCoin {
-        width: 33px;
-        height: 33px;
-        font-size: 13px;
+    .userCoinBtn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
         line-height: 25px;
         border: 2px solid black;
+    }
+    .userCoinCount{
+        font-size: 12px;
     }
     
     /* 관리자 */
@@ -678,29 +690,65 @@ h2 {
         right: 5px;
         border: 2px solid #000000;
     }
-    #managerForm {
-        width: 250px;
-        height: 300px;
-        padding: 15px;
-        font-size: 12px;
-        right: 10px;
-        top: 10px;
-        border: 3px solid #000;
+    #managerForm{
+        font-size: 15px;
     }
-    
+    #managerFormModal {
+        width: 250px;
+        height: 250px;
+        padding: 15px;
+        left: 100px;
+        font-size: 15px;
+        border: 2px solid #000;
+    }
+    .selectInput{
+        margin-bottom: 15px;
+    }    
+    .selectInput,
     .managerInput{
         height: 25px;
-        margin-bottom: 5px;
         line-height: 20px;
-        font-size: 12px;
+        font-size: 15px;
         border-radius: 5px;
         border: 2px solid #000;
+    }
+    .managerInput {
+        width: 70%;
+        margin: 15px 0px 0px 0px;
+    }
+    .inputInfoText{
+        height: 15px;
+        text-align: center;
+        color: red;
+    }
+    .managerFormClose {
+        width: 35px;
+        height: 35px;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        border-radius: 5px;
+        border: 3px solid #000;
+        box-sizing: border-box;
+        background-color: #d8f0f9a1;
     }
     
     #formSubmitBtn {
         height: 25px;
-        font-size: 12px;
+        font-size: 15px;
+        margin-top: 10px;
         border-radius: 5px;
         border: 2px solid #000;
+    }
+    .managerFormClose {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        border-radius: 5px;
+        border: 3px solid #000;
+        box-sizing: border-box;
+        background-color: #d8f0f9a1;
     }
 }
