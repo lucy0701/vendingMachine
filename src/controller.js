@@ -111,15 +111,15 @@ export default class Controller {
     let count = 0;
 
     if (this.m.getIsPurchased() === true) {
-      let insultCount = 0;
+      let insultCoinCount = 0;
 
       [...coins].reverse().forEach((coin) => {
         count = parseInt(totalAmount / coin,10);
         if (machineCoins[coin] >= 0 && machineCoins[coin] >= count) {
-          insultCount = insultCoins[coin];
-          insultCoins[coin] -= insultCount;
+          insultCoinCount = insultCoins[coin];
+          insultCoins[coin] -= insultCoinCount;
           userCoins[coin] += count;
-          machineCoins[coin] += insultCount - count;
+          machineCoins[coin] += insultCoinCount - count;
           count *= coin;
           totalAmount -= count;
         }

@@ -32,8 +32,8 @@ export default class View {
     );
 
     document
-    .querySelector('.myItemDelete-01')
-    .addEventListener('click', this.onClickDeleteMyItemBtn);
+      .querySelector('.myItemDelete-01')
+      .addEventListener('click', this.onClickMyItemDeleteBtn);
 
     this.managerForm.addEventListener('change', this.onChangeInput);
   }
@@ -183,39 +183,38 @@ export default class View {
   }
 
   // 인풋 상태
-  onFocusInfut = (inputChange, index) => {
+  inputWarningMessage(inputChange, index){
     const inputInfoText = document.querySelectorAll('.inputInfoText');
     inputChange.style.borderColor = 'red';
     inputInfoText[index].innerHTML = '빈칸을 채워주세요';
   };
-  offFocusInfut = (inputChange, index) => {
+  initInputMessage(inputChange, index){
     const inputInfoText = document.querySelectorAll('.inputInfoText');
     inputChange.style.borderColor = '';
     inputInfoText[index].innerHTML = '';
   };
 
-  onChangeInput = (e) => {
+  onChangeInput = () => {
     const priceChange = this.managerForm.querySelector('#priceChange');
     const stockChange = this.managerForm.querySelector('#stockChange');
 
     if (stockChange.value === '') {
-      this.onFocusInfut(stockChange,stockChange.dataset.inputIndex);
+      this.inputWarningMessage(stockChange, stockChange.dataset.inputIndex);
     } else {
-      this.offFocusInfut(stockChange,stockChange.dataset.inputIndex);
+      this.initInputMessage(stockChange, stockChange.dataset.inputIndex);
     }
-    if(priceChange.value === '') {
-      this.onFocusInfut(priceChange,priceChange.dataset.inputIndex);
+    if (priceChange.value === '') {
+      this.inputWarningMessage(priceChange, priceChange.dataset.inputIndex);
     } else {
-      this.offFocusInfut(priceChange,priceChange.dataset.inputIndex);
+      this.initInputMessage(priceChange, priceChange.dataset.inputIndex);
     }
-  }
-
+  };
 
   //구매 삭제버튼 전환
-  onClickDeleteMyItemBtn = () => {
+  onClickMyItemDeleteBtn = () => {
     const itemCheckBoxse = document.querySelectorAll('.itemCheckBox');
     itemCheckBoxse.forEach((itemCheckBox) => {
-      if (itemCheckBox.style.display = 'none') {
+      if ((itemCheckBox.style.display = 'none')) {
         itemCheckBox.style.display = 'block';
       }
     });
@@ -223,11 +222,9 @@ export default class View {
     document.querySelector('.myItemDelete-02').style.display = 'block';
   };
 
-
   // 모달 (쇼, 클로즈 따로 만들어도 됨)
   onClickModalBtn(btn, Modal) {
-    btn.addEventListener('click', (e) => {
-      console.log(e.currentTarget)
+    btn.addEventListener('click', () => {
       if (Modal.open) {
         Modal.close();
       } else {
