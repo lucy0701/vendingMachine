@@ -35,11 +35,7 @@ export default class Controller {
     // on + Eventname + itemSelector
     // onChangeItemSelector
     this.v.managerForm.addEventListener('submit', this.onSubmitManagerForm);
-    this.v.managerForm.addEventListener('change', this.onChangeInput);
 
-    document
-      .querySelector('.myItemDelete-01')
-      .addEventListener('click', this.onClickDeleteMyItemBtn);
     document
       .querySelector('.myItemDelete-02')
       .addEventListener('click', this.onCheckMyItemDelete);
@@ -91,17 +87,6 @@ export default class Controller {
   onClickGetMyItem = () => {
     this.v.hideDropItemDisplay();
     this.v.updateMyItemList(this.m.getMyItemList());
-  };
-
-  onClickDeleteMyItemBtn = () => {
-    const itemCheckBoxse = document.querySelectorAll('.itemCheckBox');
-    itemCheckBoxse.forEach((itemCheckBox) => {
-      if (itemCheckBox.style.display = 'none') {
-        itemCheckBox.style.display = 'block';
-      }
-    });
-    document.querySelector('.myItemDelete-01').style.display = 'none';
-    document.querySelector('.myItemDelete-02').style.display = 'block';
   };
 
   onCheckMyItemDelete = () => {
@@ -195,19 +180,4 @@ export default class Controller {
     } 
   };
 
-  onChangeInput = (e) => {
-    const priceChange = this.v.managerForm.querySelector('#priceChange');
-    const stockChange = this.v.managerForm.querySelector('#stockChange');
-
-    if (stockChange.value === '') {
-      this.v.onFocusInfut(stockChange,stockChange.dataset.inputIndex);
-    } else {
-      this.v.offFocusInfut(stockChange,stockChange.dataset.inputIndex);
-    }
-    if(priceChange.value === '') {
-      this.v.onFocusInfut(priceChange,priceChange.dataset.inputIndex);
-    } else {
-      this.v.offFocusInfut(priceChange,priceChange.dataset.inputIndex);
-    }
-  }
 }

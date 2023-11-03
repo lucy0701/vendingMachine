@@ -10,10 +10,10 @@ export default class View {
     this.selectItem = document.querySelector('#selectItem');
     this.managerForm = document.querySelector('#managerForm');
 
-    this.modalEventHandlers();
+    this.initEventHandlers();
   }
 
-  modalEventHandlers() {
+  initEventHandlers() {
     this.onClickModalBtn(
       document.querySelector('#walletBtn'),
       document.querySelector('#walletModal'),
@@ -30,6 +30,12 @@ export default class View {
       document.querySelector('.managerFormClose'),
       document.querySelector('#managerFormModal'),
     );
+
+    document
+    .querySelector('.myItemDelete-01')
+    .addEventListener('click', this.onClickDeleteMyItemBtn);
+
+    this.managerForm.addEventListener('change', this.onChangeInput);
   }
 
   // 렌더링
@@ -176,7 +182,7 @@ export default class View {
     formSubmitBtn.disabled = true;
   }
 
-  //포커스
+  // 인풋 상태
   onFocusInfut = (inputChange, index) => {
     const inputInfoText = document.querySelectorAll('.inputInfoText');
     inputChange.style.borderColor = 'red';
@@ -187,6 +193,36 @@ export default class View {
     inputChange.style.borderColor = '';
     inputInfoText[index].innerHTML = '';
   };
+
+  onChangeInput = (e) => {
+    const priceChange = this.managerForm.querySelector('#priceChange');
+    const stockChange = this.managerForm.querySelector('#stockChange');
+
+    if (stockChange.value === '') {
+      this.onFocusInfut(stockChange,stockChange.dataset.inputIndex);
+    } else {
+      this.offFocusInfut(stockChange,stockChange.dataset.inputIndex);
+    }
+    if(priceChange.value === '') {
+      this.onFocusInfut(priceChange,priceChange.dataset.inputIndex);
+    } else {
+      this.offFocusInfut(priceChange,priceChange.dataset.inputIndex);
+    }
+  }
+
+
+  //구매 삭제버튼 전환
+  onClickDeleteMyItemBtn = () => {
+    const itemCheckBoxse = document.querySelectorAll('.itemCheckBox');
+    itemCheckBoxse.forEach((itemCheckBox) => {
+      if (itemCheckBox.style.display = 'none') {
+        itemCheckBox.style.display = 'block';
+      }
+    });
+    document.querySelector('.myItemDelete-01').style.display = 'none';
+    document.querySelector('.myItemDelete-02').style.display = 'block';
+  };
+
 
   // 모달 (쇼, 클로즈 따로 만들어도 됨)
   onClickModalBtn(btn, Modal) {
