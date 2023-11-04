@@ -91,13 +91,21 @@ export default class Controller {
 
   onCheckMyItemDelete = () => {
     const itemCheckBoxse = document.querySelectorAll('.itemCheckBox');
+    const indexesToDelete = [];
+
     itemCheckBoxse.forEach((itemCheckBox, index) => {
       if (itemCheckBox.checked) {
-        this.v.removeMyItem(index);
-        this.m.deleteMyItem(index);
+        console.log(index);
+        indexesToDelete.push(index);
       }
       itemCheckBox.style.display = 'none';
     });
+
+    indexesToDelete.reverse().forEach((indexToDelete) => {
+      this.v.removeMyItem(indexToDelete);
+      this.m.deleteMyItem(indexToDelete);
+    })
+
     document.querySelector('.myItemDelete-01').style.display = 'block';
     document.querySelector('.myItemDelete-02').style.display = 'none';
   };
@@ -114,7 +122,7 @@ export default class Controller {
       let insultCoinCount = 0;
 
       [...coins].reverse().forEach((coin) => {
-        count = parseInt(totalAmount / coin,10);
+        count = parseInt(totalAmount / coin, 10);
         if (machineCoins[coin] >= 0 && machineCoins[coin] >= count) {
           insultCoinCount = insultCoins[coin];
           insultCoins[coin] -= insultCoinCount;
@@ -125,11 +133,10 @@ export default class Controller {
         }
       });
       this.m.setIsPurchased(false);
-
     } else {
       [...coins].reverse().forEach((coin) => {
         if (insultCoins[coin] !== 0) {
-          count = parseInt(totalAmount / coin,10);
+          count = parseInt(totalAmount / coin, 10);
           userCoins[coin] += count;
           insultCoins[coin] -= count;
           count *= coin;
@@ -161,7 +168,6 @@ export default class Controller {
 
     stockChange.value = item.stock;
     priceChange.value = item.price;
-
   };
 
   onSubmitManagerForm = (e) => {
@@ -177,7 +183,6 @@ export default class Controller {
       this.v.updateItems(this.m.getItems(), index);
       this.v.initManagerinputValue(priceChange, stockChange, formSubmitBtn);
       this.v.updateBuyBtn(this.m.getTotalAmount(), this.m.getItems());
-    } 
+    }
   };
-
 }
