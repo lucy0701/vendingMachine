@@ -105,7 +105,7 @@ export default class View {
           <div class="itemStock">${item.stock}</div>
           <img class="itemImgPrint" src=${item.image} />
         </div>
-        <button class="buyBtn" data-item-index="${index}" disabled >고백 박기</button>   
+        <button class="buyBtn" data-item-index="${index}" disabled >구매</button>   
       </div>
     `;
   }

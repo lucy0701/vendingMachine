@@ -95,7 +95,6 @@ export default class Controller {
 
     itemCheckBoxse.forEach((itemCheckBox, index) => {
       if (itemCheckBox.checked) {
-        console.log(index);
         indexesToDelete.push(index);
       }
       itemCheckBox.style.display = 'none';
@@ -104,7 +103,7 @@ export default class Controller {
     indexesToDelete.reverse().forEach((indexToDelete) => {
       this.v.removeMyItem(indexToDelete);
       this.m.deleteMyItem(indexToDelete);
-    })
+    });
 
     document.querySelector('.myItemDelete-01').style.display = 'block';
     document.querySelector('.myItemDelete-02').style.display = 'none';
